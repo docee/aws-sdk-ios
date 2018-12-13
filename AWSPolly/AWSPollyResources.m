@@ -426,6 +426,7 @@
         \"en-IN\",\
         \"en-US\",\
         \"es-ES\",\
+        \"es-MX\",\
         \"es-US\",\
         \"fr-CA\",\
         \"fr-FR\",\
@@ -881,7 +882,7 @@
         },\
         \"OutputFormat\":{\
           \"shape\":\"OutputFormat\",\
-          \"documentation\":\"<p> The format in which the returned output will be encoded. For audio stream, this will be mp3, ogg_vorbis, or pcm. For speech marks, this will be json. </p>\"\
+          \"documentation\":\"<p> The format in which the returned output will be encoded. For audio stream, this will be mp3, ogg_vorbis, or pcm. For speech marks, this will be json. </p> <p>When pcm is used, the content returned is audio/pcm in a signed 16-bit, 1 channel (mono), little-endian format. </p>\"\
         },\
         \"SampleRate\":{\
           \"shape\":\"SampleRate\",\
@@ -1067,7 +1068,10 @@
         \"Takumi\",\
         \"Seoyeon\",\
         \"Aditi\",\
-        \"Zhiyu\"\
+        \"Zhiyu\",\
+        \"Bianca\",\
+        \"Lucia\",\
+        \"Mia\"\
       ]\
     },\
     \"VoiceList\":{\
@@ -1077,8 +1081,7 @@
     \"VoiceName\":{\"type\":\"string\"}\
   },\
   \"documentation\":\"<p>Amazon Polly is a web service that makes it easy to synthesize speech from text.</p> <p>The Amazon Polly service provides API operations for synthesizing high-quality speech from plain text and Speech Synthesis Markup Language (SSML), along with managing pronunciations lexicons that enable you to get the best results for your application domain.</p>\"\
-}\
-";
+}";
 }
 
 @end

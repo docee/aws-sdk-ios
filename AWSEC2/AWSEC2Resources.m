@@ -100,6 +100,16 @@
       \"output\":{\"shape\":\"AcceptVpcPeeringConnectionResult\"},\
       \"documentation\":\"<p>Accept a VPC peering connection request. To accept a request, the VPC peering connection must be in the <code>pending-acceptance</code> state, and you must be the owner of the peer VPC. Use <a>DescribeVpcPeeringConnections</a> to view your outstanding VPC peering connection requests.</p> <p>For an inter-region VPC peering connection request, you must accept the VPC peering connection in the region of the accepter VPC.</p>\"\
     },\
+    \"AdvertiseByoipCidr\":{\
+      \"name\":\"AdvertiseByoipCidr\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"AdvertiseByoipCidrRequest\"},\
+      \"output\":{\"shape\":\"AdvertiseByoipCidrResult\"},\
+      \"documentation\":\"<p>Advertises an IPv4 address range that is provisioned for use with your AWS resources through bring your own IP addresses (BYOIP).</p> <p>You can perform this operation at most once every 10 seconds, even if you specify different address ranges each time.</p> <p>We recommend that you stop advertising the BYOIP CIDR from other locations when you advertise it from AWS. To minimize down time, you can configure your AWS resources to use an address from a BYOIP CIDR before it is advertised, and then simultaneously stop advertising it from the current location and start advertising it through AWS.</p> <p>It can take a few minutes before traffic to the specified addresses starts routing to AWS because of BGP propagation delays.</p> <p>To stop advertising the BYOIP CIDR, use <a>WithdrawByoipCidr</a>.</p>\"\
+    },\
     \"AllocateAddress\":{\
       \"name\":\"AllocateAddress\",\
       \"http\":{\
@@ -108,7 +118,7 @@
       },\
       \"input\":{\"shape\":\"AllocateAddressRequest\"},\
       \"output\":{\"shape\":\"AllocateAddressResult\"},\
-      \"documentation\":\"<p>Allocates an Elastic IP address to your AWS account. After you allocate the Elastic IP address you can associate it with an instance or network interface. After you release an Elastic IP address, it is released to the IP address pool and can be allocated to a different AWS account.</p> <p>[EC2-VPC] If you release an Elastic IP address, you might be able to recover it. You cannot recover an Elastic IP address that you released after it is allocated to another AWS account. You cannot recover an Elastic IP address for EC2-Classic. To attempt to recover an Elastic IP address that you released, specify it in this operation.</p> <p>An Elastic IP address is for use either in the EC2-Classic platform or in a VPC. By default, you can allocate 5 Elastic IP addresses for EC2-Classic per region and 5 Elastic IP addresses for EC2-VPC per region.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\\\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Allocates an Elastic IP address to your AWS account. After you allocate the Elastic IP address you can associate it with an instance or network interface. After you release an Elastic IP address, it is released to the IP address pool and can be allocated to a different AWS account.</p> <p>You can allocate an Elastic IP address from an address pool owned by AWS or from an address pool created from a public IPv4 address range that you have brought to AWS for use with your AWS resources using bring your own IP addresses (BYOIP). For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html\\\">Bring Your Own IP Addresses (BYOIP)</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>[EC2-VPC] If you release an Elastic IP address, you might be able to recover it. You cannot recover an Elastic IP address that you released after it is allocated to another AWS account. You cannot recover an Elastic IP address for EC2-Classic. To attempt to recover an Elastic IP address that you released, specify it in this operation.</p> <p>An Elastic IP address is for use either in the EC2-Classic platform or in a VPC. By default, you can allocate 5 Elastic IP addresses for EC2-Classic per region and 5 Elastic IP addresses for EC2-VPC per region.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\\\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"AllocateHosts\":{\
       \"name\":\"AllocateHosts\",\
@@ -137,7 +147,7 @@
         \"requestUri\":\"/\"\
       },\
       \"input\":{\"shape\":\"AssignPrivateIpAddressesRequest\"},\
-      \"documentation\":\"<p>Assigns one or more secondary private IP addresses to the specified network interface. You can specify one or more specific secondary IP addresses, or you can specify the number of secondary IP addresses to be automatically assigned within the subnet's CIDR block range. The number of secondary IP addresses that you can assign to an instance varies by instance type. For information about instance types, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html\\\">Instance Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. For more information about Elastic IP addresses, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\\\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>AssignPrivateIpAddresses is available only in EC2-VPC.</p>\"\
+      \"documentation\":\"<p>Assigns one or more secondary private IP addresses to the specified network interface.</p> <p>You can specify one or more specific secondary IP addresses, or you can specify the number of secondary IP addresses to be automatically assigned within the subnet's CIDR block range. The number of secondary IP addresses that you can assign to an instance varies by instance type. For information about instance types, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html\\\">Instance Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. For more information about Elastic IP addresses, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html\\\">Elastic IP Addresses</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>When you move a secondary private IP address to another network interface, any Elastic IP address that is associated with the IP address is also moved.</p> <p>Remapping an IP address is an asynchronous operation. When you move an IP address from one network interface to another, check <code>network/interfaces/macs/mac/local-ipv4s</code> in the instance metadata to confirm that the remapping is complete.</p>\"\
     },\
     \"AssociateAddress\":{\
       \"name\":\"AssociateAddress\",\
@@ -285,6 +295,16 @@
       \"output\":{\"shape\":\"CancelBundleTaskResult\"},\
       \"documentation\":\"<p>Cancels a bundling operation for an instance store-backed Windows instance.</p>\"\
     },\
+    \"CancelCapacityReservation\":{\
+      \"name\":\"CancelCapacityReservation\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"CancelCapacityReservationRequest\"},\
+      \"output\":{\"shape\":\"CancelCapacityReservationResult\"},\
+      \"documentation\":\"<p>Cancels the specified Capacity Reservation, releases the reserved capacity, and changes the Capacity Reservation's state to <code>cancelled</code>.</p> <p>Instances running in the reserved capacity continue running until you stop them. Stopped instances that target the Capacity Reservation can no longer launch. Modify these instances to either target a different Capacity Reservation, launch On-Demand Instance capacity, or run in any open Capacity Reservation that has matching attributes and sufficient capacity.</p>\"\
+    },\
     \"CancelConversionTask\":{\
       \"name\":\"CancelConversionTask\",\
       \"http\":{\
@@ -371,7 +391,7 @@
       },\
       \"input\":{\"shape\":\"CopyImageRequest\"},\
       \"output\":{\"shape\":\"CopyImageResult\"},\
-      \"documentation\":\"<p>Initiates the copy of an AMI from the specified source region to the current region. You specify the destination region by using its endpoint when making the request.</p> <p>For more information about the prerequisites and limits when copying an AMI, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html\\\">Copying an AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Initiates the copy of an AMI from the specified source region to the current region. You specify the destination region by using its endpoint when making the request.</p> <p>Copies of encrypted backing snapshots for the AMI are encrypted. Copies of unencrypted backing snapshots remain unencrypted, unless you set <code>Encrypted</code> during the copy operation. You cannot create an unencrypted copy of an encrypted backing snapshot.</p> <p>For more information about the prerequisites and limits when copying an AMI, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html\\\">Copying an AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"CopySnapshot\":{\
       \"name\":\"CopySnapshot\",\
@@ -381,7 +401,17 @@
       },\
       \"input\":{\"shape\":\"CopySnapshotRequest\"},\
       \"output\":{\"shape\":\"CopySnapshotResult\"},\
-      \"documentation\":\"<p>Copies a point-in-time snapshot of an EBS volume and stores it in Amazon S3. You can copy the snapshot within the same region or from one region to another. You can use the snapshot to create EBS volumes or Amazon Machine Images (AMIs). The snapshot is copied to the regional endpoint that you send the HTTP request to.</p> <p>Copies of encrypted EBS snapshots remain encrypted. Copies of unencrypted snapshots remain unencrypted, unless the <code>Encrypted</code> flag is specified during the snapshot copy operation. By default, encrypted snapshot copies use the default AWS Key Management Service (AWS KMS) customer master key (CMK); however, you can specify a non-default CMK with the <code>KmsKeyId</code> parameter. </p> <p>To copy an encrypted snapshot that has been shared from another account, you must have permissions for the CMK used to encrypt the snapshot.</p> <p>Snapshots created by copying another snapshot have an arbitrary volume ID that should not be used for any purpose.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-copy-snapshot.html\\\">Copying an Amazon EBS Snapshot</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Copies a point-in-time snapshot of an EBS volume and stores it in Amazon S3. You can copy the snapshot within the same region or from one region to another. You can use the snapshot to create EBS volumes or Amazon Machine Images (AMIs). The snapshot is copied to the regional endpoint that you send the HTTP request to.</p> <p>Copies of encrypted EBS snapshots remain encrypted. Copies of unencrypted snapshots remain unencrypted, unless the <code>Encrypted</code> flag is specified during the snapshot copy operation. By default, encrypted snapshot copies use the default AWS Key Management Service (AWS KMS) customer master key (CMK); however, you can specify a non-default CMK with the <code>KmsKeyId</code> parameter.</p> <p>To copy an encrypted snapshot that has been shared from another account, you must have permissions for the CMK used to encrypt the snapshot.</p> <p>Snapshots created by copying another snapshot have an arbitrary volume ID that should not be used for any purpose.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-copy-snapshot.html\\\">Copying an Amazon EBS Snapshot</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+    },\
+    \"CreateCapacityReservation\":{\
+      \"name\":\"CreateCapacityReservation\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"CreateCapacityReservationRequest\"},\
+      \"output\":{\"shape\":\"CreateCapacityReservationResult\"},\
+      \"documentation\":\"<p>Creates a new Capacity Reservation with the specified attributes.</p> <p>Capacity Reservations enable you to reserve capacity for your Amazon EC2 instances in a specific Availability Zone for any duration. This gives you the flexibility to selectively add capacity reservations and still get the Regional RI discounts for that usage. By creating Capacity Reservations, you ensure that you always have access to Amazon EC2 capacity when you need it, for as long as you need it. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html\\\">Capacity Reservations</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Your request to create a Capacity Reservation could fail if Amazon EC2 does not have sufficient capacity to fulfill the request. If your request fails due to Amazon EC2 capacity constraints, either try again at a later time, try in a different Availability Zone, or request a smaller capacity reservation. If your application is flexible across instance types and sizes, try to create a Capacity Reservation with different instance attributes.</p> <p>Your request could also fail if the requested quantity exceeds your On-Demand Instance limit for the selected instance type. If your request fails due to limit constraints, increase your On-Demand Instance limit for the required instance type and try again. For more information about increasing your instance limits, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html\\\">Amazon EC2 Service Limits</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"CreateCustomerGateway\":{\
       \"name\":\"CreateCustomerGateway\",\
@@ -411,7 +441,7 @@
       },\
       \"input\":{\"shape\":\"CreateDefaultVpcRequest\"},\
       \"output\":{\"shape\":\"CreateDefaultVpcResult\"},\
-      \"documentation\":\"<p>Creates a default VPC with a size <code>/16</code> IPv4 CIDR block and a default subnet in each Availability Zone. For more information about the components of a default VPC, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html\\\">Default VPC and Default Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>. You cannot specify the components of the default VPC yourself.</p> <p>iIf you deleted your previous default VPC, you can create a default VPC. You cannot have more than one default VPC per Region. </p> <p>If your account supports EC2-Classic, you cannot use this action to create a default VPC in a Region that supports EC2-Classic. If you want a default VPC in a Region that supports EC2-Classic, see \\\"I really want a default VPC for my existing EC2 account. Is that possible?\\\" in the <a href=\\\"http://aws.amazon.com/vpc/faqs/#Default_VPCs\\\">Default VPCs FAQ</a>.</p>\"\
+      \"documentation\":\"<p>Creates a default VPC with a size <code>/16</code> IPv4 CIDR block and a default subnet in each Availability Zone. For more information about the components of a default VPC, see <a href=\\\"http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html\\\">Default VPC and Default Subnets</a> in the <i>Amazon Virtual Private Cloud User Guide</i>. You cannot specify the components of the default VPC yourself.</p> <p>If you deleted your previous default VPC, you can create a default VPC. You cannot have more than one default VPC per Region.</p> <p>If your account supports EC2-Classic, you cannot use this action to create a default VPC in a Region that supports EC2-Classic. If you want a default VPC in a Region that supports EC2-Classic, see \\\"I really want a default VPC for my existing EC2 account. Is that possible?\\\" in the <a href=\\\"http://aws.amazon.com/vpc/faqs/#Default_VPCs\\\">Default VPCs FAQ</a>.</p>\"\
     },\
     \"CreateDhcpOptions\":{\
       \"name\":\"CreateDhcpOptions\",\
@@ -1049,6 +1079,16 @@
       \"input\":{\"shape\":\"DeleteVpnGatewayRequest\"},\
       \"documentation\":\"<p>Deletes the specified virtual private gateway. We recommend that before you delete a virtual private gateway, you detach it from the VPC and delete the VPN connection. Note that you don't need to delete the virtual private gateway if you plan to delete and recreate the VPN connection between your VPC and your network.</p>\"\
     },\
+    \"DeprovisionByoipCidr\":{\
+      \"name\":\"DeprovisionByoipCidr\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"DeprovisionByoipCidrRequest\"},\
+      \"output\":{\"shape\":\"DeprovisionByoipCidrResult\"},\
+      \"documentation\":\"<p>Releases the specified address range that you provisioned for use with your AWS resources through bring your own IP addresses (BYOIP) and deletes the corresponding address pool.</p> <p>Before you can release an address range, you must stop advertising it using <a>WithdrawByoipCidr</a> and you must not have any IP addresses allocated from its address range.</p>\"\
+    },\
     \"DeregisterImage\":{\
       \"name\":\"DeregisterImage\",\
       \"http\":{\
@@ -1107,6 +1147,26 @@
       \"input\":{\"shape\":\"DescribeBundleTasksRequest\"},\
       \"output\":{\"shape\":\"DescribeBundleTasksResult\"},\
       \"documentation\":\"<p>Describes one or more of your bundling tasks.</p> <note> <p>Completed bundle tasks are listed for only a limited time. If your bundle task is no longer in the list, you can still register an AMI from it. Just use <code>RegisterImage</code> with the Amazon S3 bucket name and image manifest name you provided to the bundle task.</p> </note>\"\
+    },\
+    \"DescribeByoipCidrs\":{\
+      \"name\":\"DescribeByoipCidrs\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"DescribeByoipCidrsRequest\"},\
+      \"output\":{\"shape\":\"DescribeByoipCidrsResult\"},\
+      \"documentation\":\"<p>Describes the IP address ranges that were specified in calls to <a>ProvisionByoipCidr</a>.</p> <p>To describe the address pools that were created when you provisioned the address ranges, use <a>DescribePublicIpv4Pools</a>.</p>\"\
+    },\
+    \"DescribeCapacityReservations\":{\
+      \"name\":\"DescribeCapacityReservations\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"DescribeCapacityReservationsRequest\"},\
+      \"output\":{\"shape\":\"DescribeCapacityReservationsResult\"},\
+      \"documentation\":\"<p>Describes one or more of your Capacity Reservations. The results describe only the Capacity Reservations in the AWS Region that you're currently using.</p>\"\
     },\
     \"DescribeClassicLinkInstances\":{\
       \"name\":\"DescribeClassicLinkInstances\",\
@@ -1246,7 +1306,7 @@
       },\
       \"input\":{\"shape\":\"DescribeHostReservationOfferingsRequest\"},\
       \"output\":{\"shape\":\"DescribeHostReservationOfferingsResult\"},\
-      \"documentation\":\"<p>Describes the Dedicated Host reservations that are available to purchase.</p> <p>The results describe all the Dedicated Host reservation offerings, including offerings that may not match the instance family and region of your Dedicated Hosts. When purchasing an offering, ensure that the instance family and Region of the offering matches that of the Dedicated Hosts with which it is to be associated . For more information about supported instance types, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html\\\">Dedicated Hosts Overview</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p>\"\
+      \"documentation\":\"<p>Describes the Dedicated Host reservations that are available to purchase.</p> <p>The results describe all the Dedicated Host reservation offerings, including offerings that may not match the instance family and region of your Dedicated Hosts. When purchasing an offering, ensure that the instance family and Region of the offering matches that of the Dedicated Hosts with which it is to be associated. For more information about supported instance types, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html\\\">Dedicated Hosts Overview</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p>\"\
     },\
     \"DescribeHostReservations\":{\
       \"name\":\"DescribeHostReservations\",\
@@ -1356,7 +1416,7 @@
       },\
       \"input\":{\"shape\":\"DescribeInstanceCreditSpecificationsRequest\"},\
       \"output\":{\"shape\":\"DescribeInstanceCreditSpecificationsResult\"},\
-      \"documentation\":\"<p>Describes the credit option for CPU usage of one or more of your T2 instances. The credit options are <code>standard</code> and <code>unlimited</code>.</p> <p>If you do not specify an instance ID, Amazon EC2 returns only the T2 instances with the <code>unlimited</code> credit option. If you specify one or more instance IDs, Amazon EC2 returns the credit option (<code>standard</code> or <code>unlimited</code>) of those instances. If you specify an instance ID that is not valid, such as an instance that is not a T2 instance, an error is returned.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>If an Availability Zone is experiencing a service disruption and you specify instance IDs in the affected zone, or do not specify any instance IDs at all, the call fails. If you specify only instance IDs in an unaffected zone, the call works normally.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/t2-instances.html\\\">T2 Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Describes the credit option for CPU usage of one or more of your T2 or T3 instances. The credit options are <code>standard</code> and <code>unlimited</code>.</p> <p>If you do not specify an instance ID, Amazon EC2 returns T2 and T3 instances with the <code>unlimited</code> credit option, as well as instances that were previously configured as T2 or T3 with the <code>unlimited</code> credit option. For example, if you resize a T2 instance, while it is configured as <code>unlimited</code>, to an M4 instance, Amazon EC2 returns the M4 instance.</p> <p>If you specify one or more instance IDs, Amazon EC2 returns the credit option (<code>standard</code> or <code>unlimited</code>) of those instances. If you specify an instance ID that is not valid, such as an instance that is not a T2 or T3 instance, an error is returned.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>If an Availability Zone is experiencing a service disruption and you specify instance IDs in the affected zone, or do not specify any instance IDs at all, the call fails. If you specify only instance IDs in an unaffected zone, the call works normally.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\\\">Burstable Performance Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"DescribeInstanceStatus\":{\
       \"name\":\"DescribeInstanceStatus\",\
@@ -1508,6 +1568,16 @@
       \"output\":{\"shape\":\"DescribePrincipalIdFormatResult\"},\
       \"documentation\":\"<p>Describes the ID format settings for the root user and all IAM roles and IAM users that have explicitly specified a longer ID (17-character ID) preference. </p> <p>By default, all IAM roles and IAM users default to the same ID settings as the root user, unless they explicitly override the settings. This request is useful for identifying those IAM users and IAM roles that have overridden the default ID settings.</p> <p>The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>. </p>\"\
     },\
+    \"DescribePublicIpv4Pools\":{\
+      \"name\":\"DescribePublicIpv4Pools\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"DescribePublicIpv4PoolsRequest\"},\
+      \"output\":{\"shape\":\"DescribePublicIpv4PoolsResult\"},\
+      \"documentation\":\"<p>Describes the specified IPv4 address pools.</p>\"\
+    },\
     \"DescribeRegions\":{\
       \"name\":\"DescribeRegions\",\
       \"http\":{\
@@ -1656,7 +1726,7 @@
       },\
       \"input\":{\"shape\":\"DescribeSpotFleetRequestHistoryRequest\"},\
       \"output\":{\"shape\":\"DescribeSpotFleetRequestHistoryResponse\"},\
-      \"documentation\":\"<p>Describes the events for the specified Spot Fleet request during the specified time.</p> <p>Spot Fleet events are delayed by up to 30 seconds before they can be described. This ensures that you can query by the last evaluated time and not miss a recorded event.</p>\"\
+      \"documentation\":\"<p>Describes the events for the specified Spot Fleet request during the specified time.</p> <p>Spot Fleet events are delayed by up to 30 seconds before they can be described. This ensures that you can query by the last evaluated time and not miss a recorded event. Spot Fleet events are available for 48 hours.</p>\"\
     },\
     \"DescribeSpotFleetRequests\":{\
       \"name\":\"DescribeSpotFleetRequests\",\
@@ -2160,6 +2230,16 @@
       \"output\":{\"shape\":\"ImportVolumeResult\"},\
       \"documentation\":\"<p>Creates an import volume task using metadata from the specified disk image.For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/importing-your-volumes-into-amazon-ebs.html\\\">Importing Disks to Amazon EBS</a>.</p> <p>For information about the import manifest referenced by this API action, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html\\\">VM Import Manifest</a>.</p>\"\
     },\
+    \"ModifyCapacityReservation\":{\
+      \"name\":\"ModifyCapacityReservation\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"ModifyCapacityReservationRequest\"},\
+      \"output\":{\"shape\":\"ModifyCapacityReservationResult\"},\
+      \"documentation\":\"<p>Modifies a Capacity Reservation's capacity and the conditions under which it is to be released. You cannot change a Capacity Reservation's instance type, EBS optimization, instance store settings, platform, Availability Zone, or instance eligibility. If you need to modify any of these attributes, we recommend that you cancel the Capacity Reservation, and then create a new one with the required attributes.</p>\"\
+    },\
     \"ModifyFleet\":{\
       \"name\":\"ModifyFleet\",\
       \"http\":{\
@@ -2188,7 +2268,7 @@
       },\
       \"input\":{\"shape\":\"ModifyHostsRequest\"},\
       \"output\":{\"shape\":\"ModifyHostsResult\"},\
-      \"documentation\":\"<p>Modify the auto-placement setting of a Dedicated Host. When auto-placement is enabled, any instances that you launch with a tenancy of <code>host</code> but without a specific host ID are placed onto any available Dedicated Host in your account that has auto-placement enabled. When auto-placement is disabled, you need to provide a host ID ito have the instance launch onto a specific host. If no host ID is provided, the instance is launched onto a suitable host with auto-placement enabled.</p>\"\
+      \"documentation\":\"<p>Modify the auto-placement setting of a Dedicated Host. When auto-placement is enabled, any instances that you launch with a tenancy of <code>host</code> but without a specific host ID are placed onto any available Dedicated Host in your account that has auto-placement enabled. When auto-placement is disabled, you need to provide a host ID to have the instance launch onto a specific host. If no host ID is provided, the instance is launched onto a suitable host with auto-placement enabled.</p>\"\
     },\
     \"ModifyIdFormat\":{\
       \"name\":\"ModifyIdFormat\",\
@@ -2226,6 +2306,16 @@
       \"input\":{\"shape\":\"ModifyInstanceAttributeRequest\"},\
       \"documentation\":\"<p>Modifies the specified attribute of the specified instance. You can specify only one attribute at a time.</p> <p> <b>Note: </b>Using this action to change the security groups associated with an elastic network interface (ENI) attached to an instance in a VPC can result in an error if the instance has more than one ENI. To change the security groups associated with an ENI attached to an instance that has multiple ENIs, we recommend that you use the <a>ModifyNetworkInterfaceAttribute</a> action.</p> <p>To modify some attributes, the instance must be stopped. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_ChangingAttributesWhileInstanceStopped.html\\\">Modifying Attributes of a Stopped Instance</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
+    \"ModifyInstanceCapacityReservationAttributes\":{\
+      \"name\":\"ModifyInstanceCapacityReservationAttributes\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"ModifyInstanceCapacityReservationAttributesRequest\"},\
+      \"output\":{\"shape\":\"ModifyInstanceCapacityReservationAttributesResult\"},\
+      \"documentation\":\"<p>Modifies the Capacity Reservation settings for a stopped instance. Use this action to configure an instance to target a specific Capacity Reservation, run in any <code>open</code> Capacity Reservation with matching attributes, or run On-Demand Instance capacity.</p>\"\
+    },\
     \"ModifyInstanceCreditSpecification\":{\
       \"name\":\"ModifyInstanceCreditSpecification\",\
       \"http\":{\
@@ -2234,7 +2324,7 @@
       },\
       \"input\":{\"shape\":\"ModifyInstanceCreditSpecificationRequest\"},\
       \"output\":{\"shape\":\"ModifyInstanceCreditSpecificationResult\"},\
-      \"documentation\":\"<p>Modifies the credit option for CPU usage on a running or stopped T2 instance. The credit options are <code>standard</code> and <code>unlimited</code>.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/t2-instances.html\\\">T2 Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Modifies the credit option for CPU usage on a running or stopped T2 or T3 instance. The credit options are <code>standard</code> and <code>unlimited</code>.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\\\">Burstable Performance Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
     },\
     \"ModifyInstancePlacement\":{\
       \"name\":\"ModifyInstancePlacement\",\
@@ -2411,6 +2501,16 @@
       \"output\":{\"shape\":\"MoveAddressToVpcResult\"},\
       \"documentation\":\"<p>Moves an Elastic IP address from the EC2-Classic platform to the EC2-VPC platform. The Elastic IP address must be allocated to your account for more than 24 hours, and it must not be associated with an instance. After the Elastic IP address is moved, it is no longer available for use in the EC2-Classic platform, unless you move it back using the <a>RestoreAddressToClassic</a> request. You cannot move an Elastic IP address that was originally allocated for use in the EC2-VPC platform to the EC2-Classic platform. </p>\"\
     },\
+    \"ProvisionByoipCidr\":{\
+      \"name\":\"ProvisionByoipCidr\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"ProvisionByoipCidrRequest\"},\
+      \"output\":{\"shape\":\"ProvisionByoipCidrResult\"},\
+      \"documentation\":\"<p>Provisions an address range for use with your AWS resources through bring your own IP addresses (BYOIP) and creates a corresponding address pool. After the address range is provisioned, it is ready to be advertised using <a>AdvertiseByoipCidr</a>.</p> <p>AWS verifies that you own the address range and are authorized to advertise it. You must ensure that the address range is registered to you and that you created an RPKI ROA to authorize Amazon ASNs 16509 and 14618 to advertise the address range. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-byoip.html\\\">Bring Your Own IP Addresses (BYOIP)</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Provisioning an address range is an asynchronous operation, so the call returns immediately, but the address range is not ready to use until its status changes from <code>pending-provision</code> to <code>provisioned</code>. To monitor the status of an address range, use <a>DescribeByoipCidrs</a>. To allocate an Elastic IP address from your address pool, use <a>AllocateAddress</a> with either the specific address from the address pool or the ID of the address pool.</p>\"\
+    },\
     \"PurchaseHostReservation\":{\
       \"name\":\"PurchaseHostReservation\",\
       \"http\":{\
@@ -2497,7 +2597,7 @@
       },\
       \"input\":{\"shape\":\"ReleaseHostsRequest\"},\
       \"output\":{\"shape\":\"ReleaseHostsResult\"},\
-      \"documentation\":\"<p>When you no longer want to use an On-Demand Dedicated Host it can be released. On-Demand billing is stopped and the host goes into <code>released</code> state. The host ID of Dedicated Hosts that have been released can no longer be specified in another request, for example, ModifyHosts. You must stop or terminate all instances on a host before it can be released.</p> <p>When Dedicated Hosts are released, it may take some time for them to stop counting toward your limit and you may receive capacity errors when trying to allocate new Dedicated Hosts. Wait a few minutes and then try again.</p> <p>Released hosts still appear in a <a>DescribeHosts</a> response.</p>\"\
+      \"documentation\":\"<p>When you no longer want to use an On-Demand Dedicated Host it can be released. On-Demand billing is stopped and the host goes into <code>released</code> state. The host ID of Dedicated Hosts that have been released can no longer be specified in another request, for example, to modify the host. You must stop or terminate all instances on a host before it can be released.</p> <p>When Dedicated Hosts are released, it may take some time for them to stop counting toward your limit and you may receive capacity errors when trying to allocate new Dedicated Hosts. Wait a few minutes and then try again.</p> <p>Released hosts still appear in a <a>DescribeHosts</a> response.</p>\"\
     },\
     \"ReplaceIamInstanceProfileAssociation\":{\
       \"name\":\"ReplaceIamInstanceProfileAssociation\",\
@@ -2748,6 +2848,16 @@
       \"input\":{\"shape\":\"UpdateSecurityGroupRuleDescriptionsIngressRequest\"},\
       \"output\":{\"shape\":\"UpdateSecurityGroupRuleDescriptionsIngressResult\"},\
       \"documentation\":\"<p>Updates the description of an ingress (inbound) security group rule. You can replace an existing description, or add a description to a rule that did not have one previously.</p> <p>You specify the description as part of the IP permissions structure. You can remove a description for a security group rule by omitting the description parameter in the request.</p>\"\
+    },\
+    \"WithdrawByoipCidr\":{\
+      \"name\":\"WithdrawByoipCidr\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"WithdrawByoipCidrRequest\"},\
+      \"output\":{\"shape\":\"WithdrawByoipCidrResult\"},\
+      \"documentation\":\"<p>Stops advertising an IPv4 address range that is provisioned as an address pool.</p> <p>You can perform this operation at most once every 10 seconds, even if you specify different address ranges each time.</p> <p>It can take a few minutes before traffic to the specified addresses stops routing to AWS because of BGP propagation delays.</p>\"\
     }\
   },\
   \"shapes\":{\
@@ -2828,8 +2938,7 @@
           \"documentation\":\"<p>The ID of the VPC peering connection. You must specify this parameter in the request.</p>\",\
           \"locationName\":\"vpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AcceptVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"AcceptVpcPeeringConnectionResult\":{\
       \"type\":\"structure\",\
@@ -2839,8 +2948,7 @@
           \"documentation\":\"<p>Information about the VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnection\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of AcceptVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"AccountAttribute\":{\
       \"type\":\"structure\",\
@@ -2986,6 +3094,11 @@
           \"shape\":\"TagList\",\
           \"documentation\":\"<p>Any tags assigned to the Elastic IP address.</p>\",\
           \"locationName\":\"tagSet\"\
+        },\
+        \"PublicIpv4Pool\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of an address pool.</p>\",\
+          \"locationName\":\"publicIpv4Pool\"\
         }\
       },\
       \"documentation\":\"<p>Describes an Elastic IP address.</p>\"\
@@ -2995,6 +3108,30 @@
       \"member\":{\
         \"shape\":\"Address\",\
         \"locationName\":\"item\"\
+      }\
+    },\
+    \"AdvertiseByoipCidrRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"Cidr\"],\
+      \"members\":{\
+        \"Cidr\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The IPv4 address range, in CIDR notation.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"AdvertiseByoipCidrResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ByoipCidr\":{\
+          \"shape\":\"ByoipCidr\",\
+          \"documentation\":\"<p>Information about the address range.</p>\",\
+          \"locationName\":\"byoipCidr\"\
+        }\
       }\
     },\
     \"Affinity\":{\
@@ -3013,15 +3150,18 @@
         },\
         \"Address\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>[EC2-VPC] The Elastic IP address to recover.</p>\"\
+          \"documentation\":\"<p>[EC2-VPC] The Elastic IP address to recover or an IPv4 address from an address pool.</p>\"\
+        },\
+        \"PublicIpv4Pool\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of an address pool that you own. Use this parameter to let Amazon EC2 select an address from the address pool. To specify a specific address from the address pool, use the <code>Address</code> parameter instead.</p>\"\
         },\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AllocateAddress.</p>\"\
+      }\
     },\
     \"AllocateAddressResult\":{\
       \"type\":\"structure\",\
@@ -3036,13 +3176,17 @@
           \"documentation\":\"<p>[EC2-VPC] The ID that AWS assigns to represent the allocation of the Elastic IP address for use with instances in a VPC.</p>\",\
           \"locationName\":\"allocationId\"\
         },\
+        \"PublicIpv4Pool\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of an address pool.</p>\",\
+          \"locationName\":\"publicIpv4Pool\"\
+        },\
         \"Domain\":{\
           \"shape\":\"DomainType\",\
           \"documentation\":\"<p>Indicates whether this Elastic IP address is for use with instances in EC2-Classic (<code>standard</code>) or instances in a VPC (<code>vpc</code>).</p>\",\
           \"locationName\":\"domain\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of AllocateAddress.</p>\"\
+      }\
     },\
     \"AllocateHostsRequest\":{\
       \"type\":\"structure\",\
@@ -3076,9 +3220,13 @@
           \"shape\":\"Integer\",\
           \"documentation\":\"<p>The number of Dedicated Hosts to allocate to your account with these parameters.</p>\",\
           \"locationName\":\"quantity\"\
+        },\
+        \"TagSpecifications\":{\
+          \"shape\":\"TagSpecificationList\",\
+          \"documentation\":\"<p>The tags to apply to the Dedicated Host during creation.</p>\",\
+          \"locationName\":\"TagSpecification\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AllocateHosts.</p>\"\
+      }\
     },\
     \"AllocateHostsResult\":{\
       \"type\":\"structure\",\
@@ -3243,8 +3391,7 @@
           \"documentation\":\"<p>[EC2-VPC] The primary or secondary private IP address to associate with the Elastic IP address. If no private IP address is specified, the Elastic IP address is associated with the primary private IP address.</p>\",\
           \"locationName\":\"privateIpAddress\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AssociateAddress.</p>\"\
+      }\
     },\
     \"AssociateAddressResult\":{\
       \"type\":\"structure\",\
@@ -3254,8 +3401,7 @@
           \"documentation\":\"<p>[EC2-VPC] The ID that represents the association of the Elastic IP address with an instance.</p>\",\
           \"locationName\":\"associationId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of AssociateAddress.</p>\"\
+      }\
     },\
     \"AssociateDhcpOptionsRequest\":{\
       \"type\":\"structure\",\
@@ -3277,8 +3423,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AssociateDhcpOptions.</p>\"\
+      }\
     },\
     \"AssociateIamInstanceProfileRequest\":{\
       \"type\":\"structure\",\
@@ -3329,8 +3474,7 @@
           \"documentation\":\"<p>The ID of the subnet.</p>\",\
           \"locationName\":\"subnetId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AssociateRouteTable.</p>\"\
+      }\
     },\
     \"AssociateRouteTableResult\":{\
       \"type\":\"structure\",\
@@ -3340,8 +3484,7 @@
           \"documentation\":\"<p>The route table association ID. This ID is required for disassociating the route table.</p>\",\
           \"locationName\":\"associationId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of AssociateRouteTable.</p>\"\
+      }\
     },\
     \"AssociateSubnetCidrBlockRequest\":{\
       \"type\":\"structure\",\
@@ -3452,8 +3595,7 @@
           \"documentation\":\"<p>The ID of a ClassicLink-enabled VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AttachClassicLinkVpc.</p>\"\
+      }\
     },\
     \"AttachClassicLinkVpcResult\":{\
       \"type\":\"structure\",\
@@ -3463,8 +3605,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of AttachClassicLinkVpc.</p>\"\
+      }\
     },\
     \"AttachInternetGatewayRequest\":{\
       \"type\":\"structure\",\
@@ -3488,8 +3629,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AttachInternetGateway.</p>\"\
+      }\
     },\
     \"AttachNetworkInterfaceRequest\":{\
       \"type\":\"structure\",\
@@ -3675,8 +3815,7 @@
           \"documentation\":\"<p>Not supported. Use a set of IP permissions to specify a destination security group.</p>\",\
           \"locationName\":\"sourceSecurityGroupOwnerId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AuthorizeSecurityGroupEgress.</p>\"\
+      }\
     },\
     \"AuthorizeSecurityGroupIngressRequest\":{\
       \"type\":\"structure\",\
@@ -3722,8 +3861,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for AuthorizeSecurityGroupIngress.</p>\"\
+      }\
     },\
     \"AutoPlacement\":{\
       \"type\":\"string\",\
@@ -4007,6 +4145,51 @@
         \"failed\"\
       ]\
     },\
+    \"ByoipCidr\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Cidr\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The public IPv4 address range, in CIDR notation.</p>\",\
+          \"locationName\":\"cidr\"\
+        },\
+        \"Description\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The description of the address range.</p>\",\
+          \"locationName\":\"description\"\
+        },\
+        \"StatusMessage\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>Upon success, contains the ID of the address pool. Otherwise, contains an error message.</p>\",\
+          \"locationName\":\"statusMessage\"\
+        },\
+        \"State\":{\
+          \"shape\":\"ByoipCidrState\",\
+          \"documentation\":\"<p>The state of the address pool.</p>\",\
+          \"locationName\":\"state\"\
+        }\
+      },\
+      \"documentation\":\"<p>Information about an address range that is provisioned for use with your AWS resources through bring your own IP addresses (BYOIP).</p>\"\
+    },\
+    \"ByoipCidrSet\":{\
+      \"type\":\"list\",\
+      \"member\":{\
+        \"shape\":\"ByoipCidr\",\
+        \"locationName\":\"item\"\
+      }\
+    },\
+    \"ByoipCidrState\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"advertised\",\
+        \"deprovisioned\",\
+        \"failed-deprovision\",\
+        \"failed-provision\",\
+        \"pending-deprovision\",\
+        \"pending-provision\",\
+        \"provisioned\"\
+      ]\
+    },\
     \"CancelBatchErrorCode\":{\
       \"type\":\"string\",\
       \"enum\":[\
@@ -4042,6 +4225,30 @@
         }\
       },\
       \"documentation\":\"<p>Contains the output of CancelBundleTask.</p>\"\
+    },\
+    \"CancelCapacityReservationRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"CapacityReservationId\"],\
+      \"members\":{\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation to be cancelled.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"CancelCapacityReservationResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Return\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
+          \"locationName\":\"return\"\
+        }\
+      }\
     },\
     \"CancelConversionRequest\":{\
       \"type\":\"structure\",\
@@ -4320,6 +4527,207 @@
         \"shape\":\"CancelledSpotInstanceRequest\",\
         \"locationName\":\"item\"\
       }\
+    },\
+    \"CapacityReservation\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservationId\"\
+        },\
+        \"InstanceType\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The type of instance for which the Capacity Reservation reserves capacity.</p>\",\
+          \"locationName\":\"instanceType\"\
+        },\
+        \"InstancePlatform\":{\
+          \"shape\":\"CapacityReservationInstancePlatform\",\
+          \"documentation\":\"<p>The type of operating system for which the Capacity Reservation reserves capacity.</p>\",\
+          \"locationName\":\"instancePlatform\"\
+        },\
+        \"AvailabilityZone\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The Availability Zone in which the capacity is reserved.</p>\",\
+          \"locationName\":\"availabilityZone\"\
+        },\
+        \"Tenancy\":{\
+          \"shape\":\"CapacityReservationTenancy\",\
+          \"documentation\":\"<p>Indicates the tenancy of the Capacity Reservation. A Capacity Reservation can have one of the following tenancy settings:</p> <ul> <li> <p> <code>default</code> - The Capacity Reservation is created on hardware that is shared with other AWS accounts.</p> </li> <li> <p> <code>dedicated</code> - The Capacity Reservation is created on single-tenant hardware that is dedicated to a single AWS account.</p> </li> </ul>\",\
+          \"locationName\":\"tenancy\"\
+        },\
+        \"TotalInstanceCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of instances for which the Capacity Reservation reserves capacity.</p>\",\
+          \"locationName\":\"totalInstanceCount\"\
+        },\
+        \"AvailableInstanceCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The remaining capacity. Indicates the number of instances that can be launched in the Capacity Reservation.</p>\",\
+          \"locationName\":\"availableInstanceCount\"\
+        },\
+        \"EbsOptimized\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the Capacity Reservation supports EBS-optimized instances. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS- optimized instance.</p>\",\
+          \"locationName\":\"ebsOptimized\"\
+        },\
+        \"EphemeralStorage\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the Capacity Reservation supports instances with temporary, block-level storage.</p>\",\
+          \"locationName\":\"ephemeralStorage\"\
+        },\
+        \"State\":{\
+          \"shape\":\"CapacityReservationState\",\
+          \"documentation\":\"<p>The current state of the Capacity Reservation. A Capacity Reservation can be in one of the following states:</p> <ul> <li> <p> <code>active</code> - The Capacity Reservation is active and the capacity is available for your use.</p> </li> <li> <p> <code>cancelled</code> - The Capacity Reservation expired automatically at the date and time specified in your request. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>expired</code> - The Capacity Reservation was manually cancelled. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>pending</code> - The Capacity Reservation request was successful but the capacity provisioning is still pending.</p> </li> <li> <p> <code>failed</code> - The Capacity Reservation request has failed. A request might fail due to invalid request parameters, capacity constraints, or instance limit constraints. Failed requests are retained for 60 minutes.</p> </li> </ul>\",\
+          \"locationName\":\"state\"\
+        },\
+        \"EndDate\":{\
+          \"shape\":\"DateTime\",\
+          \"documentation\":\"<p>The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Reservation's state changes to <code>expired</code> when it reaches its end date and time.</p>\",\
+          \"locationName\":\"endDate\"\
+        },\
+        \"EndDateType\":{\
+          \"shape\":\"EndDateType\",\
+          \"documentation\":\"<p>Indicates the way in which the Capacity Reservation ends. A Capacity Reservation can have one of the following end types:</p> <ul> <li> <p> <code>unlimited</code> - The Capacity Reservation remains active until you explicitly cancel it.</p> </li> <li> <p> <code>limited</code> - The Capacity Reservation expires automatically at a specified date and time.</p> </li> </ul>\",\
+          \"locationName\":\"endDateType\"\
+        },\
+        \"InstanceMatchCriteria\":{\
+          \"shape\":\"InstanceMatchCriteria\",\
+          \"documentation\":\"<p>Indicates the type of instance launches that the Capacity Reservation accepts. The options include:</p> <ul> <li> <p> <code>open</code> - The Capacity Reservation accepts all instances that have matching attributes (instance type, platform, and Availability Zone). Instances that have matching attributes launch into the Capacity Reservation automatically without specifying any additional parameters.</p> </li> <li> <p> <code>targeted</code> - The Capacity Reservation only accepts instances that have matching attributes (instance type, platform, and Availability Zone), and explicitly target the Capacity Reservation. This ensures that only permitted instances can use the reserved capacity. </p> </li> </ul>\",\
+          \"locationName\":\"instanceMatchCriteria\"\
+        },\
+        \"CreateDate\":{\
+          \"shape\":\"DateTime\",\
+          \"documentation\":\"<p>The date and time at which the Capacity Reservation was created.</p>\",\
+          \"locationName\":\"createDate\"\
+        },\
+        \"Tags\":{\
+          \"shape\":\"TagList\",\
+          \"documentation\":\"<p>Any tags assigned to the Capacity Reservation.</p>\",\
+          \"locationName\":\"tagSet\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes a Capacity Reservation.</p>\"\
+    },\
+    \"CapacityReservationIdSet\":{\
+      \"type\":\"list\",\
+      \"member\":{\
+        \"shape\":\"String\",\
+        \"locationName\":\"item\"\
+      }\
+    },\
+    \"CapacityReservationInstancePlatform\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"Linux/UNIX\",\
+        \"Red Hat Enterprise Linux\",\
+        \"SUSE Linux\",\
+        \"Windows\",\
+        \"Windows with SQL Server\",\
+        \"Windows with SQL Server Enterprise\",\
+        \"Windows with SQL Server Standard\",\
+        \"Windows with SQL Server Web\"\
+      ]\
+    },\
+    \"CapacityReservationPreference\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"open\",\
+        \"none\"\
+      ]\
+    },\
+    \"CapacityReservationSet\":{\
+      \"type\":\"list\",\
+      \"member\":{\
+        \"shape\":\"CapacityReservation\",\
+        \"locationName\":\"item\"\
+      }\
+    },\
+    \"CapacityReservationSpecification\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationPreference\":{\
+          \"shape\":\"CapacityReservationPreference\",\
+          \"documentation\":\"<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs as an On-Demand Instance.</p> </li> </ul>\"\
+        },\
+        \"CapacityReservationTarget\":{\
+          \"shape\":\"CapacityReservationTarget\",\
+          \"documentation\":\"<p>Information about the target Capacity Reservation.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes an instance's Capacity Reservation targeting option. You can specify only one option at a time. Use the <code>CapacityReservationPreference</code> parameter to configure the instance to run as an On-Demand Instance or to run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone). Use the <code>CapacityReservationTarget</code> parameter to explicitly target a specific Capacity Reservation.</p>\"\
+    },\
+    \"CapacityReservationSpecificationResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationPreference\":{\
+          \"shape\":\"CapacityReservationPreference\",\
+          \"documentation\":\"<p>Describes the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>\",\
+          \"locationName\":\"capacityReservationPreference\"\
+        },\
+        \"CapacityReservationTarget\":{\
+          \"shape\":\"CapacityReservationTargetResponse\",\
+          \"documentation\":\"<p>Information about the targeted Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservationTarget\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes the instance's Capacity Reservation targeting preferences. The action returns the <code>capacityReservationPreference</code> response element if the instance is configured to run in On-Demand capacity, or if it is configured in run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone). The action returns the <code>capacityReservationTarget</code> response element if the instance explicily targets a specific Capacity Reservation.</p>\"\
+    },\
+    \"CapacityReservationState\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"active\",\
+        \"expired\",\
+        \"cancelled\",\
+        \"pending\",\
+        \"failed\"\
+      ]\
+    },\
+    \"CapacityReservationTarget\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes a target Capacity Reservation.</p>\"\
+    },\
+    \"CapacityReservationTargetResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservationId\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes a target Capacity Reservation.</p>\"\
+    },\
+    \"CapacityReservationTenancy\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"default\",\
+        \"dedicated\"\
+      ]\
+    },\
+    \"CidrAuthorizationContext\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"Message\",\
+        \"Signature\"\
+      ],\
+      \"members\":{\
+        \"Message\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The plain-text authorization message for the prefix and account.</p>\"\
+        },\
+        \"Signature\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The signed authorization message for the prefix and account.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Provides authorization for Amazon to bring a specific IP address range to a specific AWS account using bring your own IP addresses (BYOIP).</p>\"\
     },\
     \"CidrBlock\":{\
       \"type\":\"structure\",\
@@ -4670,7 +5078,7 @@
         },\
         \"Encrypted\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Specifies whether the destination snapshots of the copied image should be encrypted. The default CMK for EBS is used unless a non-default AWS Key Management Service (AWS KMS) CMK is specified with <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
+          \"documentation\":\"<p>Specifies whether the destination snapshots of the copied image should be encrypted. You can encrypt a copy of an unencrypted snapshot, but you cannot create an unencrypted copy of an encrypted snapshot. The default CMK for EBS is used unless you specify a non-default AWS Key Management Service (AWS KMS) CMK using <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
           \"locationName\":\"encrypted\"\
         },\
         \"KmsKeyId\":{\
@@ -4727,7 +5135,7 @@
         },\
         \"Encrypted\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Specifies whether the destination snapshot should be encrypted. You can encrypt a copy of an unencrypted snapshot using this flag, but you cannot use it to create an unencrypted copy from an encrypted snapshot. Your default CMK for EBS is used unless a non-default AWS Key Management Service (AWS KMS) CMK is specified with <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
+          \"documentation\":\"<p>Specifies whether the destination snapshot should be encrypted. You can encrypt a copy of an unencrypted snapshot, but you cannot use it to create an unencrypted copy of an encrypted snapshot. Your default CMK for EBS is used unless you specify a non-default AWS Key Management Service (AWS KMS) CMK using <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
           \"locationName\":\"encrypted\"\
         },\
         \"KmsKeyId\":{\
@@ -4796,6 +5204,79 @@
         }\
       },\
       \"documentation\":\"<p>The CPU options for the instance. Both the core count and threads per core must be specified in the request.</p>\"\
+    },\
+    \"CreateCapacityReservationRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"InstanceType\",\
+        \"InstancePlatform\",\
+        \"AvailabilityZone\",\
+        \"InstanceCount\"\
+      ],\
+      \"members\":{\
+        \"ClientToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\\\">How to Ensure Idempotency</a>.</p> <p>Constraint: Maximum 64 ASCII characters.</p>\"\
+        },\
+        \"InstanceType\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The instance type for which to reserve capacity. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html\\\">Instance Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+        },\
+        \"InstancePlatform\":{\
+          \"shape\":\"CapacityReservationInstancePlatform\",\
+          \"documentation\":\"<p>The type of operating system for which to reserve capacity.</p>\"\
+        },\
+        \"AvailabilityZone\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The Availability Zone in which to create the Capacity Reservation.</p>\"\
+        },\
+        \"Tenancy\":{\
+          \"shape\":\"CapacityReservationTenancy\",\
+          \"documentation\":\"<p>Indicates the tenancy of the Capacity Reservation. A Capacity Reservation can have one of the following tenancy settings:</p> <ul> <li> <p> <code>default</code> - The Capacity Reservation is created on hardware that is shared with other AWS accounts.</p> </li> <li> <p> <code>dedicated</code> - The Capacity Reservation is created on single-tenant hardware that is dedicated to a single AWS account.</p> </li> </ul>\"\
+        },\
+        \"InstanceCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of instances for which to reserve capacity.</p>\"\
+        },\
+        \"EbsOptimized\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the Capacity Reservation supports EBS-optimized instances. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS- optimized instance.</p>\"\
+        },\
+        \"EphemeralStorage\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the Capacity Reservation supports instances with temporary, block-level storage.</p>\"\
+        },\
+        \"EndDate\":{\
+          \"shape\":\"DateTime\",\
+          \"documentation\":\"<p>The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Reservation's state changes to <code>expired</code> when it reaches its end date and time.</p> <p>You must provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>limited</code>. Omit <code>EndDate</code> if <code>EndDateType</code> is <code>unlimited</code>.</p> <p>If the <code>EndDateType</code> is <code>limited</code>, the Capacity Reservation is cancelled within an hour from the specified time. For example, if you specify 5/31/2019, 13:30:55, the Capacity Reservation is guaranteed to end between 13:30:55 and 14:30:55 on 5/31/2019.</p>\"\
+        },\
+        \"EndDateType\":{\
+          \"shape\":\"EndDateType\",\
+          \"documentation\":\"<p>Indicates the way in which the Capacity Reservation ends. A Capacity Reservation can have one of the following end types:</p> <ul> <li> <p> <code>unlimited</code> - The Capacity Reservation remains active until you explicitly cancel it. Do not provide an <code>EndDate</code> if the <code>EndDateType</code> is <code>unlimited</code>.</p> </li> <li> <p> <code>limited</code> - The Capacity Reservation expires automatically at a specified date and time. You must provide an <code>EndDate</code> value if the <code>EndDateType</code> value is <code>limited</code>.</p> </li> </ul>\"\
+        },\
+        \"InstanceMatchCriteria\":{\
+          \"shape\":\"InstanceMatchCriteria\",\
+          \"documentation\":\"<p>Indicates the type of instance launches that the Capacity Reservation accepts. The options include:</p> <ul> <li> <p> <code>open</code> - The Capacity Reservation automatically matches all instances that have matching attributes (instance type, platform, and Availability Zone). Instances that have matching attributes run in the Capacity Reservation automatically without specifying any additional parameters.</p> </li> <li> <p> <code>targeted</code> - The Capacity Reservation only accepts instances that have matching attributes (instance type, platform, and Availability Zone), and explicitly target the Capacity Reservation. This ensures that only permitted instances can use the reserved capacity. </p> </li> </ul> <p>Default: <code>open</code> </p>\"\
+        },\
+        \"TagSpecifications\":{\
+          \"shape\":\"TagSpecificationList\",\
+          \"documentation\":\"<p>The tags to apply to the Capacity Reservation during launch.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"CreateCapacityReservationResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservation\":{\
+          \"shape\":\"CapacityReservation\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservation\"\
+        }\
+      }\
     },\
     \"CreateCustomerGatewayRequest\":{\
       \"type\":\"structure\",\
@@ -4868,8 +5349,7 @@
           \"shape\":\"Boolean\",\
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateDefaultVpc.</p>\"\
+      }\
     },\
     \"CreateDefaultVpcResult\":{\
       \"type\":\"structure\",\
@@ -4879,8 +5359,7 @@
           \"documentation\":\"<p>Information about the VPC.</p>\",\
           \"locationName\":\"vpc\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateDefaultVpc.</p>\"\
+      }\
     },\
     \"CreateDhcpOptionsRequest\":{\
       \"type\":\"structure\",\
@@ -4896,8 +5375,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateDhcpOptions.</p>\"\
+      }\
     },\
     \"CreateDhcpOptionsResult\":{\
       \"type\":\"structure\",\
@@ -4907,8 +5385,7 @@
           \"documentation\":\"<p>A set of DHCP options.</p>\",\
           \"locationName\":\"dhcpOptions\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateDhcpOptions.</p>\"\
+      }\
     },\
     \"CreateEgressOnlyInternetGatewayRequest\":{\
       \"type\":\"structure\",\
@@ -5058,10 +5535,9 @@
         },\
         \"LogDestination\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>Specifies the destination to which the flow log data is to be published. Flow log data can be published to an CloudWatch Logs log group or an Amazon S3 bucket. The value specified for this parameter depends on the value specified for LogDestinationType.</p> <p>If LogDestinationType is not specified or <code>cloud-watch-logs</code>, specify the Amazon Resource Name (ARN) of the CloudWatch Logs log group.</p> <p>If LogDestinationType is <code>s3</code>, specify the ARN of the Amazon S3 bucket. You can also specify a subfolder in the bucket. To specify a subfolder in the bucket, use the following ARN format: <code>bucket_ARN/subfolder_name/</code>. For example, to specify a subfolder named <code>my-logs</code> in a bucket named <code>my-bucket</code>, use the following ARN: <code>arn:aws:s3:::my-bucket/my-logs/</code>.</p>\"\
+          \"documentation\":\"<p>Specifies the destination to which the flow log data is to be published. Flow log data can be published to an CloudWatch Logs log group or an Amazon S3 bucket. The value specified for this parameter depends on the value specified for LogDestinationType.</p> <p>If LogDestinationType is not specified or <code>cloud-watch-logs</code>, specify the Amazon Resource Name (ARN) of the CloudWatch Logs log group.</p> <p>If LogDestinationType is <code>s3</code>, specify the ARN of the Amazon S3 bucket. You can also specify a subfolder in the bucket. To specify a subfolder in the bucket, use the following ARN format: <code>bucket_ARN/subfolder_name/</code>. For example, to specify a subfolder named <code>my-logs</code> in a bucket named <code>my-bucket</code>, use the following ARN: <code>arn:aws:s3:::my-bucket/my-logs/</code>. You cannot use <code>AWSLogs</code> as a subfolder name. This is a reserved term.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateFlowLogs.</p>\"\
+      }\
     },\
     \"CreateFlowLogsResult\":{\
       \"type\":\"structure\",\
@@ -5081,8 +5557,7 @@
           \"documentation\":\"<p>Information about the flow logs that could not be created successfully.</p>\",\
           \"locationName\":\"unsuccessful\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateFlowLogs.</p>\"\
+      }\
     },\
     \"CreateFpgaImageRequest\":{\
       \"type\":\"structure\",\
@@ -5138,7 +5613,7 @@
       \"members\":{\
         \"BlockDeviceMappings\":{\
           \"shape\":\"BlockDeviceMappingRequestList\",\
-          \"documentation\":\"<p>Information about one or more block device mappings.</p>\",\
+          \"documentation\":\"<p>Information about one or more block device mappings. This parameter cannot be used to modify the encryption status of existing volumes or snapshots. To create an AMI with encrypted snapshots, use the <a>CopyImage</a> action.</p>\",\
           \"locationName\":\"blockDeviceMapping\"\
         },\
         \"Description\":{\
@@ -5226,8 +5701,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateInternetGateway.</p>\"\
+      }\
     },\
     \"CreateInternetGatewayResult\":{\
       \"type\":\"structure\",\
@@ -5237,8 +5711,7 @@
           \"documentation\":\"<p>Information about the internet gateway.</p>\",\
           \"locationName\":\"internetGateway\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateInternetGateway.</p>\"\
+      }\
     },\
     \"CreateKeyPairRequest\":{\
       \"type\":\"structure\",\
@@ -5253,8 +5726,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateKeyPair.</p>\"\
+      }\
     },\
     \"CreateLaunchTemplateRequest\":{\
       \"type\":\"structure\",\
@@ -5358,8 +5830,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The subnet in which to create the NAT gateway.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateNatGateway.</p>\"\
+      }\
     },\
     \"CreateNatGatewayResult\":{\
       \"type\":\"structure\",\
@@ -5374,8 +5845,7 @@
           \"documentation\":\"<p>Information about the NAT gateway.</p>\",\
           \"locationName\":\"natGateway\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateNatGateway.</p>\"\
+      }\
     },\
     \"CreateNetworkAclEntryRequest\":{\
       \"type\":\"structure\",\
@@ -5404,7 +5874,7 @@
         },\
         \"IcmpTypeCode\":{\
           \"shape\":\"IcmpTypeCode\",\
-          \"documentation\":\"<p>ICMP protocol: The ICMP or ICMPv6 type and code. Required if specifying the ICMP protocol, or protocol 58 (ICMPv6) with an IPv6 CIDR block.</p>\",\
+          \"documentation\":\"<p>ICMP protocol: The ICMP or ICMPv6 type and code. Required if specifying protocol 1 (ICMP) or protocol 58 (ICMPv6) with an IPv6 CIDR block.</p>\",\
           \"locationName\":\"Icmp\"\
         },\
         \"Ipv6CidrBlock\":{\
@@ -5419,12 +5889,12 @@
         },\
         \"PortRange\":{\
           \"shape\":\"PortRange\",\
-          \"documentation\":\"<p>TCP or UDP protocols: The range of ports the rule applies to.</p>\",\
+          \"documentation\":\"<p>TCP or UDP protocols: The range of ports the rule applies to. Required if specifying protocol 6 (TCP) or 17 (UDP).</p>\",\
           \"locationName\":\"portRange\"\
         },\
         \"Protocol\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The protocol. A value of <code>-1</code> or <code>all</code> means all protocols. If you specify <code>all</code>, <code>-1</code>, or a protocol number other than <code>6</code> (tcp), <code>17</code> (udp), or <code>1</code> (icmp), traffic on all ports is allowed, regardless of any ports or ICMP types or codes that you specify. If you specify protocol <code>58</code> (ICMPv6) and specify an IPv4 CIDR block, traffic for all ICMP types and codes allowed, regardless of any that you specify. If you specify protocol <code>58</code> (ICMPv6) and specify an IPv6 CIDR block, you must specify an ICMP type and code.</p>\",\
+          \"documentation\":\"<p>The protocol number. A value of \\\"-1\\\" means all protocols. If you specify \\\"-1\\\" or a protocol number other than \\\"6\\\" (TCP), \\\"17\\\" (UDP), or \\\"1\\\" (ICMP), traffic on all ports is allowed, regardless of any ports or ICMP types or codes that you specify. If you specify protocol \\\"58\\\" (ICMPv6) and specify an IPv4 CIDR block, traffic for all ICMP types and codes allowed, regardless of any that you specify. If you specify protocol \\\"58\\\" (ICMPv6) and specify an IPv6 CIDR block, you must specify an ICMP type and code.</p>\",\
           \"locationName\":\"protocol\"\
         },\
         \"RuleAction\":{\
@@ -5437,8 +5907,7 @@
           \"documentation\":\"<p>The rule number for the entry (for example, 100). ACL entries are processed in ascending order by rule number.</p> <p>Constraints: Positive integer from 1 to 32766. The range 32767 to 65535 is reserved for internal use.</p>\",\
           \"locationName\":\"ruleNumber\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateNetworkAclEntry.</p>\"\
+      }\
     },\
     \"CreateNetworkAclRequest\":{\
       \"type\":\"structure\",\
@@ -5454,8 +5923,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateNetworkAcl.</p>\"\
+      }\
     },\
     \"CreateNetworkAclResult\":{\
       \"type\":\"structure\",\
@@ -5465,8 +5933,7 @@
           \"documentation\":\"<p>Information about the network ACL.</p>\",\
           \"locationName\":\"networkAcl\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateNetworkAcl.</p>\"\
+      }\
     },\
     \"CreateNetworkInterfacePermissionRequest\":{\
       \"type\":\"structure\",\
@@ -5694,8 +6161,7 @@
           \"documentation\":\"<p>The ID of a VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateRoute.</p>\"\
+      }\
     },\
     \"CreateRouteResult\":{\
       \"type\":\"structure\",\
@@ -5705,8 +6171,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateRoute.</p>\"\
+      }\
     },\
     \"CreateRouteTableRequest\":{\
       \"type\":\"structure\",\
@@ -5722,8 +6187,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateRouteTable.</p>\"\
+      }\
     },\
     \"CreateRouteTableResult\":{\
       \"type\":\"structure\",\
@@ -5733,8 +6197,7 @@
           \"documentation\":\"<p>Information about the route table.</p>\",\
           \"locationName\":\"routeTable\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateRouteTable.</p>\"\
+      }\
     },\
     \"CreateSecurityGroupRequest\":{\
       \"type\":\"structure\",\
@@ -5761,8 +6224,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateSecurityGroup.</p>\"\
+      }\
     },\
     \"CreateSecurityGroupResult\":{\
       \"type\":\"structure\",\
@@ -5772,8 +6234,7 @@
           \"documentation\":\"<p>The ID of the security group.</p>\",\
           \"locationName\":\"groupId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateSecurityGroup.</p>\"\
+      }\
     },\
     \"CreateSnapshotRequest\":{\
       \"type\":\"structure\",\
@@ -5861,8 +6322,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateSubnet.</p>\"\
+      }\
     },\
     \"CreateSubnetResult\":{\
       \"type\":\"structure\",\
@@ -5872,8 +6332,7 @@
           \"documentation\":\"<p>Information about the subnet.</p>\",\
           \"locationName\":\"subnet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateSubnet.</p>\"\
+      }\
     },\
     \"CreateTagsRequest\":{\
       \"type\":\"structure\",\
@@ -5889,7 +6348,7 @@
         },\
         \"Resources\":{\
           \"shape\":\"ResourceIdList\",\
-          \"documentation\":\"<p>The IDs of one or more resources to tag. For example, ami-1a2b3c4d.</p>\",\
+          \"documentation\":\"<p>The IDs of one or more resources, separated by spaces.</p>\",\
           \"locationName\":\"ResourceId\"\
         },\
         \"Tags\":{\
@@ -5897,8 +6356,7 @@
           \"documentation\":\"<p>One or more tags. The <code>value</code> parameter is required, but if you don't want the tag to have a value, specify the parameter with no value, and we set the value to an empty string. </p>\",\
           \"locationName\":\"Tag\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateTags.</p>\"\
+      }\
     },\
     \"CreateVolumePermission\":{\
       \"type\":\"structure\",\
@@ -6079,7 +6537,7 @@
         },\
         \"PrivateDnsEnabled\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>(Interface endpoint) Indicate whether to associate a private hosted zone with the specified VPC. The private hosted zone contains a record set for the default public DNS name for the service for the region (for example, <code>kinesis.us-east-1.amazonaws.com</code>) which resolves to the private IP addresses of the endpoint network interfaces in the VPC. This enables you to make requests to the default public DNS name for the service instead of the public DNS names that are automatically generated by the VPC endpoint service.</p> <p>To use a private hosted zone, you must set the following VPC attributes to <code>true</code>: <code>enableDnsHostnames</code> and <code>enableDnsSupport</code>. Use <a>ModifyVpcAttribute</a> to set the VPC attributes.</p> <p>Default: <code>true</code> </p>\"\
+          \"documentation\":\"<p>(Interface endpoint) Indicate whether to associate a private hosted zone with the specified VPC. The private hosted zone contains a record set for the default public DNS name for the service for the region (for example, <code>kinesis.us-east-1.amazonaws.com</code>) which resolves to the private IP addresses of the endpoint network interfaces in the VPC. This enables you to make requests to the default public DNS name for the service instead of the public DNS names that are automatically generated by the VPC endpoint service.</p> <p>To use a private hosted zone, you must set the following VPC attributes to <code>true</code>: <code>enableDnsHostnames</code> and <code>enableDnsSupport</code>. Use <a>ModifyVpcAttribute</a> to set the VPC attributes.</p> <p>Default: <code>false</code> </p>\"\
         }\
       },\
       \"documentation\":\"<p>Contains the parameters for CreateVpcEndpoint.</p>\"\
@@ -6165,8 +6623,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The region code for the accepter VPC, if the accepter VPC is located in a region other than the region in which you make the request.</p> <p>Default: The region in which you make the request.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"CreateVpcPeeringConnectionResult\":{\
       \"type\":\"structure\",\
@@ -6176,8 +6633,7 @@
           \"documentation\":\"<p>Information about the VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnection\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"CreateVpcRequest\":{\
       \"type\":\"structure\",\
@@ -6202,8 +6658,7 @@
           \"documentation\":\"<p>The tenancy options for instances launched into the VPC. For <code>default</code>, instances are launched with shared tenancy by default. You can launch instances with any tenancy into a shared tenancy VPC. For <code>dedicated</code>, instances are launched as dedicated tenancy instances by default. You can only launch instances with a tenancy of <code>dedicated</code> or <code>host</code> into a dedicated tenancy VPC. </p> <p> <b>Important:</b> The <code>host</code> value cannot be used with this parameter. Use the <code>default</code> or <code>dedicated</code> values only.</p> <p>Default: <code>default</code> </p>\",\
           \"locationName\":\"instanceTenancy\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for CreateVpc.</p>\"\
+      }\
     },\
     \"CreateVpcResult\":{\
       \"type\":\"structure\",\
@@ -6213,8 +6668,7 @@
           \"documentation\":\"<p>Information about the VPC.</p>\",\
           \"locationName\":\"vpc\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of CreateVpc.</p>\"\
+      }\
     },\
     \"CreateVpnConnectionRequest\":{\
       \"type\":\"structure\",\
@@ -6318,11 +6772,11 @@
       \"members\":{\
         \"CpuCredits\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The credit option for CPU usage of a T2 instance. Valid values are <code>standard</code> and <code>unlimited</code>.</p>\",\
+          \"documentation\":\"<p>The credit option for CPU usage of a T2 or T3 instance. Valid values are <code>standard</code> and <code>unlimited</code>.</p>\",\
           \"locationName\":\"cpuCredits\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 instance.</p>\"\
+      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 or T3 instance.</p>\"\
     },\
     \"CreditSpecificationRequest\":{\
       \"type\":\"structure\",\
@@ -6330,10 +6784,10 @@
       \"members\":{\
         \"CpuCredits\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The credit option for CPU usage of a T2 instance. Valid values are <code>standard</code> and <code>unlimited</code>.</p>\"\
+          \"documentation\":\"<p>The credit option for CPU usage of a T2 or T3 instance. Valid values are <code>standard</code> and <code>unlimited</code>.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>The credit option for CPU usage of a T2 instance.</p>\"\
+      \"documentation\":\"<p>The credit option for CPU usage of a T2 or T3 instance.</p>\"\
     },\
     \"CurrencyCodeValues\":{\
       \"type\":\"string\",\
@@ -6433,8 +6887,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteDhcpOptions.</p>\"\
+      }\
     },\
     \"DeleteEgressOnlyInternetGatewayRequest\":{\
       \"type\":\"structure\",\
@@ -6586,8 +7039,7 @@
           \"documentation\":\"<p>One or more flow log IDs.</p>\",\
           \"locationName\":\"FlowLogId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteFlowLogs.</p>\"\
+      }\
     },\
     \"DeleteFlowLogsResult\":{\
       \"type\":\"structure\",\
@@ -6597,8 +7049,7 @@
           \"documentation\":\"<p>Information about the flow logs that could not be deleted successfully.</p>\",\
           \"locationName\":\"unsuccessful\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DeleteFlowLogs.</p>\"\
+      }\
     },\
     \"DeleteFpgaImageRequest\":{\
       \"type\":\"structure\",\
@@ -6638,8 +7089,7 @@
           \"documentation\":\"<p>The ID of the internet gateway.</p>\",\
           \"locationName\":\"internetGatewayId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteInternetGateway.</p>\"\
+      }\
     },\
     \"DeleteKeyPairRequest\":{\
       \"type\":\"structure\",\
@@ -6654,8 +7104,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteKeyPair.</p>\"\
+      }\
     },\
     \"DeleteLaunchTemplateRequest\":{\
       \"type\":\"structure\",\
@@ -6791,8 +7240,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The ID of the NAT gateway.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteNatGateway.</p>\"\
+      }\
     },\
     \"DeleteNatGatewayResult\":{\
       \"type\":\"structure\",\
@@ -6802,8 +7250,7 @@
           \"documentation\":\"<p>The ID of the NAT gateway.</p>\",\
           \"locationName\":\"natGatewayId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DeleteNatGateway.</p>\"\
+      }\
     },\
     \"DeleteNetworkAclEntryRequest\":{\
       \"type\":\"structure\",\
@@ -6833,8 +7280,7 @@
           \"documentation\":\"<p>The rule number of the entry to delete.</p>\",\
           \"locationName\":\"ruleNumber\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteNetworkAclEntry.</p>\"\
+      }\
     },\
     \"DeleteNetworkAclRequest\":{\
       \"type\":\"structure\",\
@@ -6850,8 +7296,7 @@
           \"documentation\":\"<p>The ID of the network ACL.</p>\",\
           \"locationName\":\"networkAclId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteNetworkAcl.</p>\"\
+      }\
     },\
     \"DeleteNetworkInterfacePermissionRequest\":{\
       \"type\":\"structure\",\
@@ -6941,8 +7386,7 @@
           \"documentation\":\"<p>The ID of the route table.</p>\",\
           \"locationName\":\"routeTableId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteRoute.</p>\"\
+      }\
     },\
     \"DeleteRouteTableRequest\":{\
       \"type\":\"structure\",\
@@ -6958,8 +7402,7 @@
           \"documentation\":\"<p>The ID of the route table.</p>\",\
           \"locationName\":\"routeTableId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteRouteTable.</p>\"\
+      }\
     },\
     \"DeleteSecurityGroupRequest\":{\
       \"type\":\"structure\",\
@@ -6977,8 +7420,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteSecurityGroup.</p>\"\
+      }\
     },\
     \"DeleteSnapshotRequest\":{\
       \"type\":\"structure\",\
@@ -7020,8 +7462,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteSubnet.</p>\"\
+      }\
     },\
     \"DeleteTagsRequest\":{\
       \"type\":\"structure\",\
@@ -7034,7 +7475,7 @@
         },\
         \"Resources\":{\
           \"shape\":\"ResourceIdList\",\
-          \"documentation\":\"<p>The IDs of one or more resources.</p>\",\
+          \"documentation\":\"<p>The IDs of one or more resources, separated by spaces.</p>\",\
           \"locationName\":\"resourceId\"\
         },\
         \"Tags\":{\
@@ -7042,8 +7483,7 @@
           \"documentation\":\"<p>One or more tags to delete. Specify a tag key and an optional tag value to delete specific tags. If you specify a tag key without a tag value, we delete any tag with this key regardless of its value. If you specify a tag key with an empty string as the tag value, we delete the tag only if its value is an empty string.</p> <p>If you omit this parameter, we delete all user-defined tags for the specified resources. We do not delete AWS-generated tags (tags that have the <code>aws:</code> prefix).</p>\",\
           \"locationName\":\"tag\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteTags.</p>\"\
+      }\
     },\
     \"DeleteVolumeRequest\":{\
       \"type\":\"structure\",\
@@ -7152,8 +7592,7 @@
           \"documentation\":\"<p>The ID of the VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"DeleteVpcPeeringConnectionResult\":{\
       \"type\":\"structure\",\
@@ -7163,8 +7602,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DeleteVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"DeleteVpcRequest\":{\
       \"type\":\"structure\",\
@@ -7179,8 +7617,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DeleteVpc.</p>\"\
+      }\
     },\
     \"DeleteVpnConnectionRequest\":{\
       \"type\":\"structure\",\
@@ -7231,6 +7668,30 @@
         }\
       },\
       \"documentation\":\"<p>Contains the parameters for DeleteVpnGateway.</p>\"\
+    },\
+    \"DeprovisionByoipCidrRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"Cidr\"],\
+      \"members\":{\
+        \"Cidr\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The public IPv4 address range, in CIDR notation. The prefix must be the same prefix that you specified when you provisioned the address range.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"DeprovisionByoipCidrResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ByoipCidr\":{\
+          \"shape\":\"ByoipCidr\",\
+          \"documentation\":\"<p>Information about the address range.</p>\",\
+          \"locationName\":\"byoipCidr\"\
+        }\
+      }\
     },\
     \"DeregisterImageRequest\":{\
       \"type\":\"structure\",\
@@ -7298,8 +7759,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeAddresses.</p>\"\
+      }\
     },\
     \"DescribeAddressesResult\":{\
       \"type\":\"structure\",\
@@ -7309,8 +7769,7 @@
           \"documentation\":\"<p>Information about one or more Elastic IP addresses.</p>\",\
           \"locationName\":\"addressesSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeAddresses.</p>\"\
+      }\
     },\
     \"DescribeAggregateIdFormatRequest\":{\
       \"type\":\"structure\",\
@@ -7400,6 +7859,81 @@
       },\
       \"documentation\":\"<p>Contains the output of DescribeBundleTasks.</p>\"\
     },\
+    \"DescribeByoipCidrsRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"MaxResults\"],\
+      \"members\":{\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"MaxResults\",\
+          \"documentation\":\"<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"NextToken\",\
+          \"documentation\":\"<p>The token for the next page of results.</p>\"\
+        }\
+      }\
+    },\
+    \"DescribeByoipCidrsResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ByoipCidrs\":{\
+          \"shape\":\"ByoipCidrSet\",\
+          \"documentation\":\"<p>Information about your address ranges.</p>\",\
+          \"locationName\":\"byoipCidrSet\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
+          \"locationName\":\"nextToken\"\
+        }\
+      }\
+    },\
+    \"DescribeCapacityReservationsRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationIds\":{\
+          \"shape\":\"CapacityReservationIdSet\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\",\
+          \"locationName\":\"CapacityReservationId\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to retrieve the next page of results.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned nextToken value.</p>\"\
+        },\
+        \"Filters\":{\
+          \"shape\":\"FilterList\",\
+          \"documentation\":\"<p>One or more filters.</p>\",\
+          \"locationName\":\"Filter\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"DescribeCapacityReservationsResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
+          \"locationName\":\"nextToken\"\
+        },\
+        \"CapacityReservations\":{\
+          \"shape\":\"CapacityReservationSet\",\
+          \"documentation\":\"<p>Information about the Capacity Reservations.</p>\",\
+          \"locationName\":\"capacityReservationSet\"\
+        }\
+      }\
+    },\
     \"DescribeClassicLinkInstancesRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -7428,8 +7962,7 @@
           \"documentation\":\"<p>The token to retrieve the next page of results.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeClassicLinkInstances.</p>\"\
+      }\
     },\
     \"DescribeClassicLinkInstancesResult\":{\
       \"type\":\"structure\",\
@@ -7444,8 +7977,7 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeClassicLinkInstances.</p>\"\
+      }\
     },\
     \"DescribeConversionTaskList\":{\
       \"type\":\"list\",\
@@ -7531,8 +8063,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeDhcpOptions.</p>\"\
+      }\
     },\
     \"DescribeDhcpOptionsResult\":{\
       \"type\":\"structure\",\
@@ -7542,8 +8073,7 @@
           \"documentation\":\"<p>Information about one or more DHCP options sets.</p>\",\
           \"locationName\":\"dhcpOptionsSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeDhcpOptions.</p>\"\
+      }\
     },\
     \"DescribeEgressOnlyInternetGatewaysRequest\":{\
       \"type\":\"structure\",\
@@ -7827,8 +8357,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The token to retrieve the next page of results.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeFlowLogs.</p>\"\
+      }\
     },\
     \"DescribeFlowLogsResult\":{\
       \"type\":\"structure\",\
@@ -7843,8 +8372,7 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeFlowLogs.</p>\"\
+      }\
     },\
     \"DescribeFpgaImageAttributeRequest\":{\
       \"type\":\"structure\",\
@@ -7981,7 +8509,7 @@
         },\
         \"MaxResults\":{\
           \"shape\":\"Integer\",\
-          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value. This value can be between 5 and 500.If <code>maxResults</code> is given a larger value than 500, you receive an error.</p>\"\
+          \"documentation\":\"<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the returned <code>nextToken</code> value. This value can be between 5 and 500. If <code>maxResults</code> is given a larger value than 500, you receive an error.</p>\"\
         },\
         \"NextToken\":{\
           \"shape\":\"String\",\
@@ -8027,8 +8555,7 @@
           \"documentation\":\"<p>The token to retrieve the next page of results.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeHosts.</p>\"\
+      }\
     },\
     \"DescribeHostsResult\":{\
       \"type\":\"structure\",\
@@ -8043,8 +8570,7 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeHosts.</p>\"\
+      }\
     },\
     \"DescribeIamInstanceProfileAssociationsRequest\":{\
       \"type\":\"structure\",\
@@ -8466,8 +8992,7 @@
           \"documentation\":\"<p>One or more internet gateway IDs.</p> <p>Default: Describes all your internet gateways.</p>\",\
           \"locationName\":\"internetGatewayId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeInternetGateways.</p>\"\
+      }\
     },\
     \"DescribeInternetGatewaysResult\":{\
       \"type\":\"structure\",\
@@ -8477,8 +9002,7 @@
           \"documentation\":\"<p>Information about one or more internet gateways.</p>\",\
           \"locationName\":\"internetGatewaySet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeInternetGateways.</p>\"\
+      }\
     },\
     \"DescribeKeyPairsRequest\":{\
       \"type\":\"structure\",\
@@ -8498,8 +9022,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeKeyPairs.</p>\"\
+      }\
     },\
     \"DescribeKeyPairsResult\":{\
       \"type\":\"structure\",\
@@ -8509,8 +9032,7 @@
           \"documentation\":\"<p>Information about one or more key pairs.</p>\",\
           \"locationName\":\"keySet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeKeyPairs.</p>\"\
+      }\
     },\
     \"DescribeLaunchTemplateVersionsRequest\":{\
       \"type\":\"structure\",\
@@ -8637,7 +9159,7 @@
         },\
         \"NextToken\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The token to use to retrieve the next page of results.</p>\",\
+          \"documentation\":\"<p>The token for the next page of results.</p>\",\
           \"locationName\":\"nextToken\"\
         },\
         \"PublicIps\":{\
@@ -8645,8 +9167,7 @@
           \"documentation\":\"<p>One or more Elastic IP addresses.</p>\",\
           \"locationName\":\"publicIp\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeMovingAddresses.</p>\"\
+      }\
     },\
     \"DescribeMovingAddressesResult\":{\
       \"type\":\"structure\",\
@@ -8661,8 +9182,7 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeMovingAddresses.</p>\"\
+      }\
     },\
     \"DescribeNatGatewaysRequest\":{\
       \"type\":\"structure\",\
@@ -8684,8 +9204,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The token to retrieve the next page of results.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeNatGateways.</p>\"\
+      }\
     },\
     \"DescribeNatGatewaysResult\":{\
       \"type\":\"structure\",\
@@ -8700,15 +9219,14 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeNatGateways.</p>\"\
+      }\
     },\
     \"DescribeNetworkAclsRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>association.association-id</code> - The ID of an association ID for the ACL.</p> </li> <li> <p> <code>association.network-acl-id</code> - The ID of the network ACL involved in the association.</p> </li> <li> <p> <code>association.subnet-id</code> - The ID of the subnet involved in the association.</p> </li> <li> <p> <code>default</code> - Indicates whether the ACL is the default network ACL for the VPC.</p> </li> <li> <p> <code>entry.cidr</code> - The IPv4 CIDR range specified in the entry.</p> </li> <li> <p> <code>entry.egress</code> - Indicates whether the entry applies to egress traffic.</p> </li> <li> <p> <code>entry.icmp.code</code> - The ICMP code specified in the entry, if any.</p> </li> <li> <p> <code>entry.icmp.type</code> - The ICMP type specified in the entry, if any.</p> </li> <li> <p> <code>entry.ipv6-cidr</code> - The IPv6 CIDR range specified in the entry.</p> </li> <li> <p> <code>entry.port-range.from</code> - The start of the port range specified in the entry. </p> </li> <li> <p> <code>entry.port-range.to</code> - The end of the port range specified in the entry. </p> </li> <li> <p> <code>entry.protocol</code> - The protocol specified in the entry (<code>tcp</code> | <code>udp</code> | <code>icmp</code> or a protocol number).</p> </li> <li> <p> <code>entry.rule-action</code> - Allows or denies the matching traffic (<code>allow</code> | <code>deny</code>).</p> </li> <li> <p> <code>entry.rule-number</code> - The number of an entry (in other words, rule) in the ACL's set of entries.</p> </li> <li> <p> <code>network-acl-id</code> - The ID of the network ACL.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the network ACL.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>association.association-id</code> - The ID of an association ID for the ACL.</p> </li> <li> <p> <code>association.network-acl-id</code> - The ID of the network ACL involved in the association.</p> </li> <li> <p> <code>association.subnet-id</code> - The ID of the subnet involved in the association.</p> </li> <li> <p> <code>default</code> - Indicates whether the ACL is the default network ACL for the VPC.</p> </li> <li> <p> <code>entry.cidr</code> - The IPv4 CIDR range specified in the entry.</p> </li> <li> <p> <code>entry.icmp.code</code> - The ICMP code specified in the entry, if any.</p> </li> <li> <p> <code>entry.icmp.type</code> - The ICMP type specified in the entry, if any.</p> </li> <li> <p> <code>entry.ipv6-cidr</code> - The IPv6 CIDR range specified in the entry.</p> </li> <li> <p> <code>entry.port-range.from</code> - The start of the port range specified in the entry. </p> </li> <li> <p> <code>entry.port-range.to</code> - The end of the port range specified in the entry. </p> </li> <li> <p> <code>entry.protocol</code> - The protocol specified in the entry (<code>tcp</code> | <code>udp</code> | <code>icmp</code> or a protocol number).</p> </li> <li> <p> <code>entry.rule-action</code> - Allows or denies the matching traffic (<code>allow</code> | <code>deny</code>).</p> </li> <li> <p> <code>entry.rule-number</code> - The number of an entry (in other words, rule) in the set of ACL entries.</p> </li> <li> <p> <code>network-acl-id</code> - The ID of the network ACL.</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>vpc-id</code> - The ID of the VPC for the network ACL.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"DryRun\":{\
@@ -8721,8 +9239,7 @@
           \"documentation\":\"<p>One or more network ACL IDs.</p> <p>Default: Describes all your network ACLs.</p>\",\
           \"locationName\":\"NetworkAclId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeNetworkAcls.</p>\"\
+      }\
     },\
     \"DescribeNetworkAclsResult\":{\
       \"type\":\"structure\",\
@@ -8732,8 +9249,7 @@
           \"documentation\":\"<p>Information about one or more network ACLs.</p>\",\
           \"locationName\":\"networkAclSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeNetworkAcls.</p>\"\
+      }\
     },\
     \"DescribeNetworkInterfaceAttributeRequest\":{\
       \"type\":\"structure\",\
@@ -8845,6 +9361,14 @@
           \"shape\":\"NetworkInterfaceIdList\",\
           \"documentation\":\"<p>One or more network interface IDs.</p> <p>Default: Describes all your network interfaces.</p>\",\
           \"locationName\":\"NetworkInterfaceId\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to retrieve the next page of results.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The maximum number of items to return for this request. The request returns a token that you can specify in a subsequent call to get the next set of results.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Contains the parameters for DescribeNetworkInterfaces.</p>\"\
@@ -8856,6 +9380,11 @@
           \"shape\":\"NetworkInterfaceList\",\
           \"documentation\":\"<p>Information about one or more network interfaces.</p>\",\
           \"locationName\":\"networkInterfaceSet\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
+          \"locationName\":\"nextToken\"\
         }\
       },\
       \"documentation\":\"<p>Contains the output of DescribeNetworkInterfaces.</p>\"\
@@ -8917,8 +9446,7 @@
           \"documentation\":\"<p>One or more prefix list IDs.</p>\",\
           \"locationName\":\"PrefixListId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribePrefixLists.</p>\"\
+      }\
     },\
     \"DescribePrefixListsResult\":{\
       \"type\":\"structure\",\
@@ -8933,8 +9461,7 @@
           \"documentation\":\"<p>All available prefix lists.</p>\",\
           \"locationName\":\"prefixListSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribePrefixLists.</p>\"\
+      }\
     },\
     \"DescribePrincipalIdFormatRequest\":{\
       \"type\":\"structure\",\
@@ -8969,6 +9496,39 @@
         \"NextToken\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is null when there are no more results to return.</p>\",\
+          \"locationName\":\"nextToken\"\
+        }\
+      }\
+    },\
+    \"DescribePublicIpv4PoolsRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"PoolIds\":{\
+          \"shape\":\"ValueStringList\",\
+          \"documentation\":\"<p>The IDs of the address pools.</p>\",\
+          \"locationName\":\"PoolId\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"NextToken\",\
+          \"documentation\":\"<p>The token for the next page of results.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"PoolMaxResults\",\
+          \"documentation\":\"<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>\"\
+        }\
+      }\
+    },\
+    \"DescribePublicIpv4PoolsResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"PublicIpv4Pools\":{\
+          \"shape\":\"PublicIpv4PoolSet\",\
+          \"documentation\":\"<p>Information about the address pools.</p>\",\
+          \"locationName\":\"publicIpv4PoolSet\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
       }\
@@ -9221,9 +9781,16 @@
           \"shape\":\"ValueStringList\",\
           \"documentation\":\"<p>One or more route table IDs.</p> <p>Default: Describes all your route tables.</p>\",\
           \"locationName\":\"RouteTableId\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to retrieve the next page of results.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <b>NextToken</b> value. This value can be between 5 and 100.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeRouteTables.</p>\"\
+      }\
     },\
     \"DescribeRouteTablesResult\":{\
       \"type\":\"structure\",\
@@ -9232,6 +9799,11 @@
           \"shape\":\"RouteTableList\",\
           \"documentation\":\"<p>Information about one or more route tables.</p>\",\
           \"locationName\":\"routeTableSet\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
+          \"locationName\":\"nextToken\"\
         }\
       },\
       \"documentation\":\"<p>Contains the output of DescribeRouteTables.</p>\"\
@@ -9349,7 +9921,7 @@
       \"members\":{\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is DryRunOperation. Otherwise, it is UnauthorizedOperation.</p>\"\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         },\
         \"GroupId\":{\
           \"shape\":\"GroupIds\",\
@@ -9398,8 +9970,7 @@
           \"shape\":\"Integer\",\
           \"documentation\":\"<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another request with the returned <code>NextToken</code> value. This value can be between 5 and 1000. If this parameter is not specified, then all results are returned.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeSecurityGroups.</p>\"\
+      }\
     },\
     \"DescribeSecurityGroupsResult\":{\
       \"type\":\"structure\",\
@@ -9414,8 +9985,7 @@
           \"documentation\":\"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeSecurityGroups.</p>\"\
+      }\
     },\
     \"DescribeSnapshotAttributeRequest\":{\
       \"type\":\"structure\",\
@@ -9815,7 +10385,7 @@
       \"members\":{\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is DryRunOperation. Otherwise, it is UnauthorizedOperation.</p>\"\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         },\
         \"MaxResults\":{\
           \"shape\":\"MaxResults\",\
@@ -9864,8 +10434,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeSubnets.</p>\"\
+      }\
     },\
     \"DescribeSubnetsResult\":{\
       \"type\":\"structure\",\
@@ -9875,8 +10444,7 @@
           \"documentation\":\"<p>Information about one or more subnets.</p>\",\
           \"locationName\":\"subnetSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeSubnets.</p>\"\
+      }\
     },\
     \"DescribeTagsRequest\":{\
       \"type\":\"structure\",\
@@ -9888,7 +10456,7 @@
         },\
         \"Filters\":{\
           \"shape\":\"FilterList\",\
-          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>key</code> - The tag key.</p> </li> <li> <p> <code>resource-id</code> - The resource ID.</p> </li> <li> <p> <code>resource-type</code> - The resource type (<code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip</code> | <code>fleet</code> | <code>fpga-image</code> | <code>image</code> | <code>instance</code> | <code>internet-gateway</code> | <code>launch-template</code> | <code>natgateway</code> | <code>network-acl</code> | <code>network-interface</code> | <code>reserved-instances</code> | <code>route-table</code> | <code>security-group</code> | <code>snapshot</code> | <code>spot-instances-request</code> | <code>subnet</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>).</p> </li> <li> <p> <code>value</code> - The tag value.</p> </li> </ul>\",\
+          \"documentation\":\"<p>One or more filters.</p> <ul> <li> <p> <code>key</code> - The tag key.</p> </li> <li> <p> <code>resource-id</code> - The ID of the resource.</p> </li> <li> <p> <code>resource-type</code> - The resource type (<code>customer-gateway</code> | <code>dedicated-host</code> | <code>dhcp-options</code> | <code>elastic-ip</code> | <code>fleet</code> | <code>fpga-image</code> | <code>image</code> | <code>instance</code> | <code>internet-gateway</code> | <code>launch-template</code> | <code>natgateway</code> | <code>network-acl</code> | <code>network-interface</code> | <code>reserved-instances</code> | <code>route-table</code> | <code>security-group</code> | <code>snapshot</code> | <code>spot-instances-request</code> | <code>subnet</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of the tag. For example, specify \\\"tag:Owner\\\" for the filter name and \\\"TeamA\\\" for the filter value to find resources with the tag \\\"Owner=TeamA\\\".</p> </li> <li> <p> <code>value</code> - The tag value.</p> </li> </ul>\",\
           \"locationName\":\"Filter\"\
         },\
         \"MaxResults\":{\
@@ -9901,8 +10469,7 @@
           \"documentation\":\"<p>The token to retrieve the next page of results.</p>\",\
           \"locationName\":\"nextToken\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeTags.</p>\"\
+      }\
     },\
     \"DescribeTagsResult\":{\
       \"type\":\"structure\",\
@@ -9914,11 +10481,10 @@
         },\
         \"Tags\":{\
           \"shape\":\"TagDescriptionList\",\
-          \"documentation\":\"<p>A list of tags.</p>\",\
+          \"documentation\":\"<p>The tags.</p>\",\
           \"locationName\":\"tagSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeTags.</p>\"\
+      }\
     },\
     \"DescribeVolumeAttributeRequest\":{\
       \"type\":\"structure\",\
@@ -10118,8 +10684,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeVpcAttribute.</p>\"\
+      }\
     },\
     \"DescribeVpcAttributeResult\":{\
       \"type\":\"structure\",\
@@ -10139,8 +10704,7 @@
           \"documentation\":\"<p>Indicates whether DNS resolution is enabled for the VPC. If this attribute is <code>true</code>, the Amazon DNS server resolves DNS hostnames for your instances to their corresponding IP addresses; otherwise, it does not.</p>\",\
           \"locationName\":\"enableDnsSupport\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeVpcAttribute.</p>\"\
+      }\
     },\
     \"DescribeVpcClassicLinkDnsSupportRequest\":{\
       \"type\":\"structure\",\
@@ -10159,8 +10723,7 @@
           \"shape\":\"VpcClassicLinkIdList\",\
           \"documentation\":\"<p>One or more VPC IDs.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"DescribeVpcClassicLinkDnsSupportResult\":{\
       \"type\":\"structure\",\
@@ -10175,8 +10738,7 @@
           \"documentation\":\"<p>Information about the ClassicLink DNS support status of the VPCs.</p>\",\
           \"locationName\":\"vpcs\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"DescribeVpcClassicLinkRequest\":{\
       \"type\":\"structure\",\
@@ -10196,8 +10758,7 @@
           \"documentation\":\"<p>One or more VPCs for which you want to describe the ClassicLink status.</p>\",\
           \"locationName\":\"VpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeVpcClassicLink.</p>\"\
+      }\
     },\
     \"DescribeVpcClassicLinkResult\":{\
       \"type\":\"structure\",\
@@ -10207,8 +10768,7 @@
           \"documentation\":\"<p>The ClassicLink status of one or more VPCs.</p>\",\
           \"locationName\":\"vpcSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeVpcClassicLink.</p>\"\
+      }\
     },\
     \"DescribeVpcEndpointConnectionNotificationsRequest\":{\
       \"type\":\"structure\",\
@@ -10483,8 +11043,7 @@
           \"documentation\":\"<p>One or more VPC peering connection IDs.</p> <p>Default: Describes all your VPC peering connections.</p>\",\
           \"locationName\":\"VpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeVpcPeeringConnections.</p>\"\
+      }\
     },\
     \"DescribeVpcPeeringConnectionsResult\":{\
       \"type\":\"structure\",\
@@ -10494,8 +11053,7 @@
           \"documentation\":\"<p>Information about the VPC peering connections.</p>\",\
           \"locationName\":\"vpcPeeringConnectionSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeVpcPeeringConnections.</p>\"\
+      }\
     },\
     \"DescribeVpcsRequest\":{\
       \"type\":\"structure\",\
@@ -10515,8 +11073,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DescribeVpcs.</p>\"\
+      }\
     },\
     \"DescribeVpcsResult\":{\
       \"type\":\"structure\",\
@@ -10526,8 +11083,7 @@
           \"documentation\":\"<p>Information about one or more VPCs.</p>\",\
           \"locationName\":\"vpcSet\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DescribeVpcs.</p>\"\
+      }\
     },\
     \"DescribeVpnConnectionsRequest\":{\
       \"type\":\"structure\",\
@@ -10615,8 +11171,7 @@
           \"documentation\":\"<p>The ID of the VPC to which the instance is linked.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DetachClassicLinkVpc.</p>\"\
+      }\
     },\
     \"DetachClassicLinkVpcResult\":{\
       \"type\":\"structure\",\
@@ -10626,8 +11181,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DetachClassicLinkVpc.</p>\"\
+      }\
     },\
     \"DetachInternetGatewayRequest\":{\
       \"type\":\"structure\",\
@@ -10651,8 +11205,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DetachInternetGateway.</p>\"\
+      }\
     },\
     \"DetachNetworkInterfaceRequest\":{\
       \"type\":\"structure\",\
@@ -10824,8 +11377,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The ID of the VPC.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DisableVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"DisableVpcClassicLinkDnsSupportResult\":{\
       \"type\":\"structure\",\
@@ -10835,8 +11387,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DisableVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"DisableVpcClassicLinkRequest\":{\
       \"type\":\"structure\",\
@@ -10852,8 +11403,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DisableVpcClassicLink.</p>\"\
+      }\
     },\
     \"DisableVpcClassicLinkResult\":{\
       \"type\":\"structure\",\
@@ -10863,8 +11413,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of DisableVpcClassicLink.</p>\"\
+      }\
     },\
     \"DisassociateAddressRequest\":{\
       \"type\":\"structure\",\
@@ -10882,8 +11431,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DisassociateAddress.</p>\"\
+      }\
     },\
     \"DisassociateIamInstanceProfileRequest\":{\
       \"type\":\"structure\",\
@@ -10919,8 +11467,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for DisassociateRouteTable.</p>\"\
+      }\
     },\
     \"DisassociateSubnetCidrBlockRequest\":{\
       \"type\":\"structure\",\
@@ -11111,11 +11658,6 @@
     \"EbsBlockDevice\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"Encrypted\":{\
-          \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Indicates whether the EBS volume is encrypted. Encrypted volumes can only be attached to instances that support Amazon EBS encryption. If you are creating a volume from a snapshot, you can't specify an encryption value. This is because only blank volumes can be encrypted on creation.</p>\",\
-          \"locationName\":\"encrypted\"\
-        },\
         \"DeleteOnTermination\":{\
           \"shape\":\"Boolean\",\
           \"documentation\":\"<p>Indicates whether the EBS volume is deleted on instance termination.</p>\",\
@@ -11125,10 +11667,6 @@
           \"shape\":\"Integer\",\
           \"documentation\":\"<p>The number of I/O operations per second (IOPS) that the volume supports. For <code>io1</code>, this represents the number of IOPS that are provisioned for the volume. For <code>gp2</code>, this represents the baseline performance of the volume and the rate at which the volume accumulates I/O credits for bursting. For more information about General Purpose SSD baseline performance, I/O credits, and bursting, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html\\\">Amazon EBS Volume Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Constraint: Range is 100-20000 IOPS for <code>io1</code> volumes and 100-10000 IOPS for <code>gp2</code> volumes.</p> <p>Condition: This parameter is required for requests to create <code>io1</code> volumes; it is not used in requests to create <code>gp2</code>, <code>st1</code>, <code>sc1</code>, or <code>standard</code> volumes.</p>\",\
           \"locationName\":\"iops\"\
-        },\
-        \"KmsKeyId\":{\
-          \"shape\":\"String\",\
-          \"documentation\":\"<p>Identifier (key ID, key alias, ID ARN, or alias ARN) for a user-managed CMK under which the EBS volume is encrypted.</p> <p>This parameter is only supported on <code>BlockDeviceMapping</code> objects called by <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\\\">RunInstances</a>, <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html\\\">RequestSpotFleet</a>, and <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html\\\">RequestSpotInstances</a>.</p>\"\
         },\
         \"SnapshotId\":{\
           \"shape\":\"String\",\
@@ -11144,6 +11682,15 @@
           \"shape\":\"VolumeType\",\
           \"documentation\":\"<p>The volume type: <code>gp2</code>, <code>io1</code>, <code>st1</code>, <code>sc1</code>, or <code>standard</code>.</p> <p>Default: <code>standard</code> </p>\",\
           \"locationName\":\"volumeType\"\
+        },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the EBS volume is encrypted. Encrypted volumes can only be attached to instances that support Amazon EBS encryption. </p> <p>If you are creating a volume from a snapshot, you cannot specify an encryption value. This is because only blank volumes can be encrypted on creation. If you are creating a snapshot from an existing EBS volume, you cannot specify an encryption value that differs from that of the EBS volume. We recommend that you omit the encryption value from the block device mappings when creating an image from an instance.</p>\",\
+          \"locationName\":\"encrypted\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>Identifier (key ID, key alias, ID ARN, or alias ARN) for a user-managed CMK under which the EBS volume is encrypted.</p> <p>This parameter is only supported on <code>BlockDeviceMapping</code> objects called by <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\\\">RunInstances</a>, <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html\\\">RequestSpotFleet</a>, and <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html\\\">RequestSpotInstances</a>.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes a block device for an EBS volume.</p>\"\
@@ -11411,8 +11958,7 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The ID of the VPC.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for EnableVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"EnableVpcClassicLinkDnsSupportResult\":{\
       \"type\":\"structure\",\
@@ -11422,8 +11968,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of EnableVpcClassicLinkDnsSupport.</p>\"\
+      }\
     },\
     \"EnableVpcClassicLinkRequest\":{\
       \"type\":\"structure\",\
@@ -11439,8 +11984,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for EnableVpcClassicLink.</p>\"\
+      }\
     },\
     \"EnableVpcClassicLinkResult\":{\
       \"type\":\"structure\",\
@@ -11450,8 +11994,14 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of EnableVpcClassicLink.</p>\"\
+      }\
+    },\
+    \"EndDateType\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"unlimited\",\
+        \"limited\"\
+      ]\
     },\
     \"EventCode\":{\
       \"type\":\"string\",\
@@ -11913,7 +12463,7 @@
         },\
         \"Version\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The version number. By default, the default version of the launch template is used.</p>\",\
+          \"documentation\":\"<p>The version number of the launch template. You must specify a version number.</p>\",\
           \"locationName\":\"version\"\
         }\
       },\
@@ -13244,9 +13794,17 @@
           \"shape\":\"Boolean\",\
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Specifies whether the destination AMI of the imported image should be encrypted. The default CMK for EBS is used unless you specify a non-default AWS Key Management Service (AWS KMS) CMK using <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+        },\
         \"Hypervisor\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The target hypervisor platform.</p> <p>Valid values: <code>xen</code> </p>\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>An identifier for the AWS Key Management Service (AWS KMS) customer master key (CMK) to use when creating the encrypted AMI. This parameter is only required if you want to use a non-default CMK; if this parameter is not specified, the default CMK for EBS is used. If a <code>KmsKeyId</code> is specified, the <code>Encrypted</code> flag must also be set. </p> <p>The CMK identifier may be provided in any of the following formats: </p> <ul> <li> <p>Key ID</p> </li> <li> <p>Key alias, in the form <code>alias/<i>ExampleAlias</i> </code> </p> </li> <li> <p>ARN using key ID. The ID ARN contains the <code>arn:aws:kms</code> namespace, followed by the region of the CMK, the AWS account ID of the CMK owner, the <code>key</code> namespace, and then the CMK ID. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:key/<i>abcd1234-a123-456a-a12b-a123b4cd56ef</i>.</p> </li> <li> <p>ARN using key alias. The alias ARN contains the <code>arn:aws:kms</code> namespace, followed by the region of the CMK, the AWS account ID of the CMK owner, the <code>alias</code> namespace, and then the CMK alias. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:alias/<i>ExampleAlias</i>. </p> </li> </ul> <p>AWS parses <code>KmsKeyId</code> asynchronously, meaning that the action you call may appear to complete even though you provided an invalid identifier. This action will eventually report failure. </p> <p>The specified CMK must exist in the region that the AMI is being copied to. </p>\"\
         },\
         \"LicenseType\":{\
           \"shape\":\"String\",\
@@ -13276,6 +13834,11 @@
           \"documentation\":\"<p>A description of the import task.</p>\",\
           \"locationName\":\"description\"\
         },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the AMI is encypted.</p>\",\
+          \"locationName\":\"encrypted\"\
+        },\
         \"Hypervisor\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The target hypervisor of the import task.</p>\",\
@@ -13290,6 +13853,11 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The task ID of the import image task.</p>\",\
           \"locationName\":\"importTaskId\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The identifier for the AWS Key Management Service (AWS KMS) customer master key (CMK) that was used to create the encrypted AMI.</p>\",\
+          \"locationName\":\"kmsKeyId\"\
         },\
         \"LicenseType\":{\
           \"shape\":\"String\",\
@@ -13337,6 +13905,11 @@
           \"documentation\":\"<p>A description of the import task.</p>\",\
           \"locationName\":\"description\"\
         },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the image is encrypted.</p>\",\
+          \"locationName\":\"encrypted\"\
+        },\
         \"Hypervisor\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The target hypervisor for the import task.</p> <p>Valid values: <code>xen</code> </p>\",\
@@ -13351,6 +13924,11 @@
           \"shape\":\"String\",\
           \"documentation\":\"<p>The ID of the import image task.</p>\",\
           \"locationName\":\"importTaskId\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The identifier for the AWS Key Management Service (AWS KMS) customer master key (CMK) that was used to create the encrypted image.</p>\",\
+          \"locationName\":\"kmsKeyId\"\
         },\
         \"LicenseType\":{\
           \"shape\":\"String\",\
@@ -13524,13 +14102,6 @@
     },\
     \"ImportInstanceVolumeDetailItem\":{\
       \"type\":\"structure\",\
-      \"required\":[\
-        \"AvailabilityZone\",\
-        \"BytesConverted\",\
-        \"Image\",\
-        \"Status\",\
-        \"Volume\"\
-      ],\
       \"members\":{\
         \"AvailabilityZone\":{\
           \"shape\":\"String\",\
@@ -13599,8 +14170,7 @@
           \"documentation\":\"<p>The public key. For API calls, the text must be base64-encoded. For command line tools, base64 encoding is performed for you.</p>\",\
           \"locationName\":\"publicKeyMaterial\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ImportKeyPair.</p>\"\
+      }\
     },\
     \"ImportKeyPairResult\":{\
       \"type\":\"structure\",\
@@ -13615,8 +14185,7 @@
           \"documentation\":\"<p>The key pair name you provided.</p>\",\
           \"locationName\":\"keyName\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ImportKeyPair.</p>\"\
+      }\
     },\
     \"ImportSnapshotRequest\":{\
       \"type\":\"structure\",\
@@ -13640,6 +14209,14 @@
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Specifies whether the destination snapshot of the imported image should be encrypted. The default CMK for EBS is used unless you specify a non-default AWS Key Management Service (AWS KMS) CMK using <code>KmsKeyId</code>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\\\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>An identifier for the AWS Key Management Service (AWS KMS) customer master key (CMK) to use when creating the encrypted snapshot. This parameter is only required if you want to use a non-default CMK; if this parameter is not specified, the default CMK for EBS is used. If a <code>KmsKeyId</code> is specified, the <code>Encrypted</code> flag must also be set. </p> <p>The CMK identifier may be provided in any of the following formats: </p> <ul> <li> <p>Key ID</p> </li> <li> <p>Key alias, in the form <code>alias/<i>ExampleAlias</i> </code> </p> </li> <li> <p>ARN using key ID. The ID ARN contains the <code>arn:aws:kms</code> namespace, followed by the region of the CMK, the AWS account ID of the CMK owner, the <code>key</code> namespace, and then the CMK ID. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:key/<i>abcd1234-a123-456a-a12b-a123b4cd56ef</i>.</p> </li> <li> <p>ARN using key alias. The alias ARN contains the <code>arn:aws:kms</code> namespace, followed by the region of the CMK, the AWS account ID of the CMK owner, the <code>alias</code> namespace, and then the CMK alias. For example, arn:aws:kms:<i>us-east-1</i>:<i>012345678910</i>:alias/<i>ExampleAlias</i>. </p> </li> </ul> <p>AWS parses <code>KmsKeyId</code> asynchronously, meaning that the action you call may appear to complete even though you provided an invalid identifier. This action will eventually report failure. </p> <p>The specified CMK must exist in the region that the snapshot is being copied to. </p>\"\
         },\
         \"RoleName\":{\
           \"shape\":\"String\",\
@@ -13984,6 +14561,16 @@
           \"shape\":\"CpuOptions\",\
           \"documentation\":\"<p>The CPU options for the instance.</p>\",\
           \"locationName\":\"cpuOptions\"\
+        },\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservationId\"\
+        },\
+        \"CapacityReservationSpecification\":{\
+          \"shape\":\"CapacityReservationSpecificationResponse\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\",\
+          \"locationName\":\"capacityReservationSpecification\"\
         }\
       },\
       \"documentation\":\"<p>Describes an instance.</p>\"\
@@ -14202,7 +14789,7 @@
           \"locationName\":\"cpuCredits\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 instance. </p>\"\
+      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 or T3 instance. </p>\"\
     },\
     \"InstanceCreditSpecificationList\":{\
       \"type\":\"list\",\
@@ -14230,7 +14817,7 @@
           \"documentation\":\"<p>The credit option for CPU usage of the instance. Valid values are <code>standard</code> and <code>unlimited</code>.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 instance.</p>\"\
+      \"documentation\":\"<p>Describes the credit option for CPU usage of a T2 or T3 instance.</p>\"\
     },\
     \"InstanceExportDetails\":{\
       \"type\":\"structure\",\
@@ -14339,6 +14926,13 @@
         }\
       },\
       \"documentation\":\"<p>Describes the market (purchasing) option for the instances.</p>\"\
+    },\
+    \"InstanceMatchCriteria\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"open\",\
+        \"targeted\"\
+      ]\
     },\
     \"InstanceMonitoring\":{\
       \"type\":\"structure\",\
@@ -14842,6 +15436,12 @@
         \"r5.16xlarge\",\
         \"r5.24xlarge\",\
         \"r5.metal\",\
+        \"r5a.large\",\
+        \"r5a.xlarge\",\
+        \"r5a.2xlarge\",\
+        \"r5a.4xlarge\",\
+        \"r5a.12xlarge\",\
+        \"r5a.24xlarge\",\
         \"r5d.large\",\
         \"r5d.xlarge\",\
         \"r5d.2xlarge\",\
@@ -14903,6 +15503,7 @@
         \"g3.4xlarge\",\
         \"g3.8xlarge\",\
         \"g3.16xlarge\",\
+        \"g3s.xlarge\",\
         \"cg1.4xlarge\",\
         \"p2.xlarge\",\
         \"p2.8xlarge\",\
@@ -14915,6 +15516,7 @@
         \"d2.4xlarge\",\
         \"d2.8xlarge\",\
         \"f1.2xlarge\",\
+        \"f1.4xlarge\",\
         \"f1.16xlarge\",\
         \"m5.large\",\
         \"m5.xlarge\",\
@@ -14922,6 +15524,12 @@
         \"m5.4xlarge\",\
         \"m5.12xlarge\",\
         \"m5.24xlarge\",\
+        \"m5a.large\",\
+        \"m5a.xlarge\",\
+        \"m5a.2xlarge\",\
+        \"m5a.4xlarge\",\
+        \"m5a.12xlarge\",\
+        \"m5a.24xlarge\",\
         \"m5d.large\",\
         \"m5d.xlarge\",\
         \"m5d.2xlarge\",\
@@ -14937,7 +15545,10 @@
         \"z1d.2xlarge\",\
         \"z1d.3xlarge\",\
         \"z1d.6xlarge\",\
-        \"z1d.12xlarge\"\
+        \"z1d.12xlarge\",\
+        \"u-6tb1.metal\",\
+        \"u-9tb1.metal\",\
+        \"u-12tb1.metal\"\
       ]\
     },\
     \"InstanceTypeList\":{\
@@ -15028,7 +15639,7 @@
         },\
         \"PrefixListIds\":{\
           \"shape\":\"PrefixListIdList\",\
-          \"documentation\":\"<p>(EC2-VPC only; valid for <a>AuthorizeSecurityGroupEgress</a>, <a>RevokeSecurityGroupEgress</a> and <a>DescribeSecurityGroups</a> only) One or more prefix list IDs for an AWS service. In an <a>AuthorizeSecurityGroupEgress</a> request, this is the AWS service that you want to access through a VPC endpoint from instances associated with the security group.</p>\",\
+          \"documentation\":\"<p>[EC2-VPC only] One or more prefix list IDs for an AWS service. With <a>AuthorizeSecurityGroupEgress</a>, this is the AWS service that you want to access through a VPC endpoint from instances associated with the security group.</p>\",\
           \"locationName\":\"prefixListIds\"\
         },\
         \"ToPort\":{\
@@ -15407,6 +16018,36 @@
         \"shape\":\"LaunchTemplateBlockDeviceMappingRequest\",\
         \"locationName\":\"BlockDeviceMapping\"\
       }\
+    },\
+    \"LaunchTemplateCapacityReservationSpecificationRequest\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationPreference\":{\
+          \"shape\":\"CapacityReservationPreference\",\
+          \"documentation\":\"<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>\"\
+        },\
+        \"CapacityReservationTarget\":{\
+          \"shape\":\"CapacityReservationTarget\",\
+          \"documentation\":\"<p>Information about the target Capacity Reservation.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes an instance's Capacity Reservation targeting option. You can specify only one option at a time. Use the <code>CapacityReservationPreference</code> parameter to configure the instance to run in On-Demand capacity or to run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone). Use the <code>CapacityReservationTarget</code> parameter to explicitly target a specific Capacity Reservation.</p>\"\
+    },\
+    \"LaunchTemplateCapacityReservationSpecificationResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CapacityReservationPreference\":{\
+          \"shape\":\"CapacityReservationPreference\",\
+          \"documentation\":\"<p>Indicates the instance's Capacity Reservation preferences. Possible preferences include:</p> <ul> <li> <p> <code>open</code> - The instance can run in any <code>open</code> Capacity Reservation that has matching attributes (instance type, platform, Availability Zone).</p> </li> <li> <p> <code>none</code> - The instance avoids running in a Capacity Reservation even if one is available. The instance runs in On-Demand capacity.</p> </li> </ul>\",\
+          \"locationName\":\"capacityReservationPreference\"\
+        },\
+        \"CapacityReservationTarget\":{\
+          \"shape\":\"CapacityReservationTargetResponse\",\
+          \"documentation\":\"<p>Information about the target Capacity Reservation.</p>\",\
+          \"locationName\":\"capacityReservationTarget\"\
+        }\
+      },\
+      \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\"\
     },\
     \"LaunchTemplateConfig\":{\
       \"type\":\"structure\",\
@@ -16174,6 +16815,42 @@
       \"max\":255,\
       \"min\":5\
     },\
+    \"ModifyCapacityReservationRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"CapacityReservationId\"],\
+      \"members\":{\
+        \"CapacityReservationId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the Capacity Reservation.</p>\"\
+        },\
+        \"InstanceCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of instances for which to reserve capacity.</p>\"\
+        },\
+        \"EndDate\":{\
+          \"shape\":\"DateTime\",\
+          \"documentation\":\"<p>The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Reservation's state changes to <code>expired</code> when it reaches its end date and time.</p> <p>The Capacity Reservation is cancelled within an hour from the specified time. For example, if you specify 5/31/2019, 13:30:55, the Capacity Reservation is guaranteed to end between 13:30:55 and 14:30:55 on 5/31/2019.</p> <p>You must provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>limited</code>. Omit <code>EndDate</code> if <code>EndDateType</code> is <code>unlimited</code>.</p>\"\
+        },\
+        \"EndDateType\":{\
+          \"shape\":\"EndDateType\",\
+          \"documentation\":\"<p>Indicates the way in which the Capacity Reservation ends. A Capacity Reservation can have one of the following end types:</p> <ul> <li> <p> <code>unlimited</code> - The Capacity Reservation remains active until you explicitly cancel it. Do not provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>unlimited</code>.</p> </li> <li> <p> <code>limited</code> - The Capacity Reservation expires automatically at a specified date and time. You must provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>limited</code>.</p> </li> </ul>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"ModifyCapacityReservationResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Return\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation.</p>\",\
+          \"locationName\":\"return\"\
+        }\
+      }\
+    },\
     \"ModifyFleetRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\
@@ -16285,8 +16962,7 @@
           \"documentation\":\"<p>The IDs of the Dedicated Hosts to modify.</p>\",\
           \"locationName\":\"hostId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ModifyHosts.</p>\"\
+      }\
     },\
     \"ModifyHostsResult\":{\
       \"type\":\"structure\",\
@@ -16301,8 +16977,7 @@
           \"documentation\":\"<p>The IDs of the Dedicated Hosts that could not be modified. Check whether the setting you requested can be used.</p>\",\
           \"locationName\":\"unsuccessful\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ModifyHosts.</p>\"\
+      }\
     },\
     \"ModifyIdFormatRequest\":{\
       \"type\":\"structure\",\
@@ -16485,6 +17160,37 @@
       },\
       \"documentation\":\"<p>Contains the parameters for ModifyInstanceAttribute.</p>\"\
     },\
+    \"ModifyInstanceCapacityReservationAttributesRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"InstanceId\",\
+        \"CapacityReservationSpecification\"\
+      ],\
+      \"members\":{\
+        \"InstanceId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the instance to be modified.</p>\"\
+        },\
+        \"CapacityReservationSpecification\":{\
+          \"shape\":\"CapacityReservationSpecification\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"ModifyInstanceCapacityReservationAttributesResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Return\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
+          \"locationName\":\"return\"\
+        }\
+      }\
+    },\
     \"ModifyInstanceCreditSpecificationRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"InstanceCreditSpecifications\"],\
@@ -16547,8 +17253,7 @@
           \"documentation\":\"<p>The tenancy for the instance.</p>\",\
           \"locationName\":\"tenancy\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ModifyInstancePlacement.</p>\"\
+      }\
     },\
     \"ModifyInstancePlacementResult\":{\
       \"type\":\"structure\",\
@@ -16558,8 +17263,7 @@
           \"documentation\":\"<p>Is <code>true</code> if the request succeeds, and an error otherwise.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ModifyInstancePlacement.</p>\"\
+      }\
     },\
     \"ModifyLaunchTemplateRequest\":{\
       \"type\":\"structure\",\
@@ -16758,8 +17462,7 @@
           \"documentation\":\"<p>The ID of the subnet.</p>\",\
           \"locationName\":\"subnetId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ModifySubnetAttribute.</p>\"\
+      }\
     },\
     \"ModifyVolumeAttributeRequest\":{\
       \"type\":\"structure\",\
@@ -16834,8 +17537,7 @@
           \"documentation\":\"<p>The ID of the VPC.</p>\",\
           \"locationName\":\"vpcId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ModifyVpcAttribute.</p>\"\
+      }\
     },\
     \"ModifyVpcEndpointConnectionNotificationRequest\":{\
       \"type\":\"structure\",\
@@ -17016,7 +17718,7 @@
         },\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         },\
         \"RequesterPeeringConnectionOptions\":{\
           \"shape\":\"PeeringConnectionOptionsRequest\",\
@@ -17060,10 +17762,9 @@
         },\
         \"DryRun\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>Checks whether you have the required permissions for the operation, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ModifyVpcTenancy.</p>\"\
+      }\
     },\
     \"ModifyVpcTenancyResult\":{\
       \"type\":\"structure\",\
@@ -17073,8 +17774,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ModifyVpcTenancy.</p>\"\
+      }\
     },\
     \"MonitorInstancesRequest\":{\
       \"type\":\"structure\",\
@@ -17138,8 +17838,7 @@
           \"documentation\":\"<p>The Elastic IP address.</p>\",\
           \"locationName\":\"publicIp\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for MoveAddressToVpc.</p>\"\
+      }\
     },\
     \"MoveAddressToVpcResult\":{\
       \"type\":\"structure\",\
@@ -17154,8 +17853,7 @@
           \"documentation\":\"<p>The status of the move of the IP address.</p>\",\
           \"locationName\":\"status\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of MoveAddressToVpc.</p>\"\
+      }\
     },\
     \"MoveStatus\":{\
       \"type\":\"string\",\
@@ -17392,7 +18090,7 @@
         },\
         \"Protocol\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The protocol. A value of <code>-1</code> means all protocols.</p>\",\
+          \"documentation\":\"<p>The protocol number. A value of \\\"-1\\\" means all protocols.</p>\",\
           \"locationName\":\"protocol\"\
         },\
         \"RuleAction\":{\
@@ -17918,12 +18616,12 @@
         },\
         \"AllowEgressFromLocalClassicLinkToRemoteVpc\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>If true, enables outbound communication from an EC2-Classic instance that's linked to a local VPC via ClassicLink to instances in a peer VPC.</p>\",\
+          \"documentation\":\"<p>If true, enables outbound communication from an EC2-Classic instance that's linked to a local VPC using ClassicLink to instances in a peer VPC.</p>\",\
           \"locationName\":\"allowEgressFromLocalClassicLinkToRemoteVpc\"\
         },\
         \"AllowEgressFromLocalVpcToRemoteClassicLink\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>If true, enables outbound communication from instances in a local VPC to an EC2-Classic instance that's linked to a peer VPC via ClassicLink.</p>\",\
+          \"documentation\":\"<p>If true, enables outbound communication from instances in a local VPC to an EC2-Classic instance that's linked to a peer VPC using ClassicLink.</p>\",\
           \"locationName\":\"allowEgressFromLocalVpcToRemoteClassicLink\"\
         }\
       },\
@@ -17938,11 +18636,11 @@
         },\
         \"AllowEgressFromLocalClassicLinkToRemoteVpc\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>If true, enables outbound communication from an EC2-Classic instance that's linked to a local VPC via ClassicLink to instances in a peer VPC.</p>\"\
+          \"documentation\":\"<p>If true, enables outbound communication from an EC2-Classic instance that's linked to a local VPC using ClassicLink to instances in a peer VPC.</p>\"\
         },\
         \"AllowEgressFromLocalVpcToRemoteClassicLink\":{\
           \"shape\":\"Boolean\",\
-          \"documentation\":\"<p>If true, enables outbound communication from instances in a local VPC to an EC2-Classic instance that's linked to a peer VPC via ClassicLink.</p>\"\
+          \"documentation\":\"<p>If true, enables outbound communication from instances in a local VPC to an EC2-Classic instance that's linked to a peer VPC using ClassicLink.</p>\"\
         }\
       },\
       \"documentation\":\"<p>The VPC peering connection options.</p>\"\
@@ -18039,6 +18737,11 @@
       \"type\":\"string\",\
       \"enum\":[\"Windows\"]\
     },\
+    \"PoolMaxResults\":{\
+      \"type\":\"integer\",\
+      \"max\":10,\
+      \"min\":1\
+    },\
     \"PortRange\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -18090,7 +18793,7 @@
           \"locationName\":\"prefixListId\"\
         }\
       },\
-      \"documentation\":\"<p>[EC2-VPC only] The ID of the prefix.</p>\"\
+      \"documentation\":\"<p>Describes a prefix list ID.</p>\"\
     },\
     \"PrefixListIdList\":{\
       \"type\":\"list\",\
@@ -18327,6 +19030,38 @@
         \"locationName\":\"item\"\
       }\
     },\
+    \"ProvisionByoipCidrRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"Cidr\"],\
+      \"members\":{\
+        \"Cidr\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The public IPv4 address range, in CIDR notation. The most specific prefix that you can specify is /24. The address range cannot overlap with another address range that you've brought to this or another region.</p>\"\
+        },\
+        \"CidrAuthorizationContext\":{\
+          \"shape\":\"CidrAuthorizationContext\",\
+          \"documentation\":\"<p>A signed document that proves that you are authorized to bring the specified IP address range to Amazon using BYOIP.</p>\"\
+        },\
+        \"Description\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>A description for the address range and the address pool.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"ProvisionByoipCidrResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ByoipCidr\":{\
+          \"shape\":\"ByoipCidr\",\
+          \"documentation\":\"<p>Information about the address pool.</p>\",\
+          \"locationName\":\"byoipCidr\"\
+        }\
+      }\
+    },\
     \"ProvisionedBandwidth\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -18363,6 +19098,77 @@
       \"member\":{\
         \"shape\":\"String\",\
         \"locationName\":\"PublicIp\"\
+      }\
+    },\
+    \"PublicIpv4Pool\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"PoolId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The ID of the IPv4 address pool.</p>\",\
+          \"locationName\":\"poolId\"\
+        },\
+        \"Description\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>A description of the address pool.</p>\",\
+          \"locationName\":\"description\"\
+        },\
+        \"PoolAddressRanges\":{\
+          \"shape\":\"PublicIpv4PoolRangeSet\",\
+          \"documentation\":\"<p>The address ranges.</p>\",\
+          \"locationName\":\"poolAddressRangeSet\"\
+        },\
+        \"TotalAddressCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The total number of addresses.</p>\",\
+          \"locationName\":\"totalAddressCount\"\
+        },\
+        \"TotalAvailableAddressCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The total number of available addresses.</p>\",\
+          \"locationName\":\"totalAvailableAddressCount\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes an address pool.</p>\"\
+    },\
+    \"PublicIpv4PoolRange\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"FirstAddress\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The first IP address in the range.</p>\",\
+          \"locationName\":\"firstAddress\"\
+        },\
+        \"LastAddress\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The last IP address in the range.</p>\",\
+          \"locationName\":\"lastAddress\"\
+        },\
+        \"AddressCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of addresses in the range.</p>\",\
+          \"locationName\":\"addressCount\"\
+        },\
+        \"AvailableAddressCount\":{\
+          \"shape\":\"Integer\",\
+          \"documentation\":\"<p>The number of available addresses in the range.</p>\",\
+          \"locationName\":\"availableAddressCount\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes an address range of an IPv4 address pool.</p>\"\
+    },\
+    \"PublicIpv4PoolRangeSet\":{\
+      \"type\":\"list\",\
+      \"member\":{\
+        \"shape\":\"PublicIpv4PoolRange\",\
+        \"locationName\":\"item\"\
+      }\
+    },\
+    \"PublicIpv4PoolSet\":{\
+      \"type\":\"list\",\
+      \"member\":{\
+        \"shape\":\"PublicIpv4Pool\",\
+        \"locationName\":\"item\"\
       }\
     },\
     \"Purchase\":{\
@@ -18799,8 +19605,7 @@
           \"documentation\":\"<p>The ID of the VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for RejectVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"RejectVpcPeeringConnectionResult\":{\
       \"type\":\"structure\",\
@@ -18810,8 +19615,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of RejectVpcPeeringConnection.</p>\"\
+      }\
     },\
     \"ReleaseAddressRequest\":{\
       \"type\":\"structure\",\
@@ -18829,8 +19633,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReleaseAddress.</p>\"\
+      }\
     },\
     \"ReleaseHostsRequest\":{\
       \"type\":\"structure\",\
@@ -18841,8 +19644,7 @@
           \"documentation\":\"<p>The IDs of the Dedicated Hosts to release.</p>\",\
           \"locationName\":\"hostId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReleaseHosts.</p>\"\
+      }\
     },\
     \"ReleaseHostsResult\":{\
       \"type\":\"structure\",\
@@ -18857,8 +19659,7 @@
           \"documentation\":\"<p>The IDs of the Dedicated Hosts that could not be released, including an error message.</p>\",\
           \"locationName\":\"unsuccessful\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ReleaseHosts.</p>\"\
+      }\
     },\
     \"ReplaceIamInstanceProfileAssociationRequest\":{\
       \"type\":\"structure\",\
@@ -18909,8 +19710,7 @@
           \"documentation\":\"<p>The ID of the new network ACL to associate with the subnet.</p>\",\
           \"locationName\":\"networkAclId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReplaceNetworkAclAssociation.</p>\"\
+      }\
     },\
     \"ReplaceNetworkAclAssociationResult\":{\
       \"type\":\"structure\",\
@@ -18920,8 +19720,7 @@
           \"documentation\":\"<p>The ID of the new association.</p>\",\
           \"locationName\":\"newAssociationId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ReplaceNetworkAclAssociation.</p>\"\
+      }\
     },\
     \"ReplaceNetworkAclEntryRequest\":{\
       \"type\":\"structure\",\
@@ -18950,7 +19749,7 @@
         },\
         \"IcmpTypeCode\":{\
           \"shape\":\"IcmpTypeCode\",\
-          \"documentation\":\"<p>ICMP protocol: The ICMP or ICMPv6 type and code. Required if specifying the ICMP (1) protocol, or protocol 58 (ICMPv6) with an IPv6 CIDR block.</p>\",\
+          \"documentation\":\"<p>ICMP protocol: The ICMP or ICMPv6 type and code. Required if specifying protocol 1 (ICMP) or protocol 58 (ICMPv6) with an IPv6 CIDR block.</p>\",\
           \"locationName\":\"Icmp\"\
         },\
         \"Ipv6CidrBlock\":{\
@@ -18965,12 +19764,12 @@
         },\
         \"PortRange\":{\
           \"shape\":\"PortRange\",\
-          \"documentation\":\"<p>TCP or UDP protocols: The range of ports the rule applies to. Required if specifying TCP (6) or UDP (17) for the protocol.</p>\",\
+          \"documentation\":\"<p>TCP or UDP protocols: The range of ports the rule applies to. Required if specifying protocol 6 (TCP) or 17 (UDP).</p>\",\
           \"locationName\":\"portRange\"\
         },\
         \"Protocol\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The IP protocol. You can specify <code>all</code> or <code>-1</code> to mean all protocols. If you specify <code>all</code>, <code>-1</code>, or a protocol number other than <code>tcp</code>, <code>udp</code>, or <code>icmp</code>, traffic on all ports is allowed, regardless of any ports or ICMP types or codes you that specify. If you specify protocol <code>58</code> (ICMPv6) and specify an IPv4 CIDR block, traffic for all ICMP types and codes allowed, regardless of any that you specify. If you specify protocol <code>58</code> (ICMPv6) and specify an IPv6 CIDR block, you must specify an ICMP type and code.</p>\",\
+          \"documentation\":\"<p>The protocol number. A value of \\\"-1\\\" means all protocols. If you specify \\\"-1\\\" or a protocol number other than \\\"6\\\" (TCP), \\\"17\\\" (UDP), or \\\"1\\\" (ICMP), traffic on all ports is allowed, regardless of any ports or ICMP types or codes that you specify. If you specify protocol \\\"58\\\" (ICMPv6) and specify an IPv4 CIDR block, traffic for all ICMP types and codes allowed, regardless of any that you specify. If you specify protocol \\\"58\\\" (ICMPv6) and specify an IPv6 CIDR block, you must specify an ICMP type and code.</p>\",\
           \"locationName\":\"protocol\"\
         },\
         \"RuleAction\":{\
@@ -18983,8 +19782,7 @@
           \"documentation\":\"<p>The rule number of the entry to replace.</p>\",\
           \"locationName\":\"ruleNumber\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReplaceNetworkAclEntry.</p>\"\
+      }\
     },\
     \"ReplaceRouteRequest\":{\
       \"type\":\"structure\",\
@@ -19040,8 +19838,7 @@
           \"documentation\":\"<p>The ID of a VPC peering connection.</p>\",\
           \"locationName\":\"vpcPeeringConnectionId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReplaceRoute.</p>\"\
+      }\
     },\
     \"ReplaceRouteTableAssociationRequest\":{\
       \"type\":\"structure\",\
@@ -19065,8 +19862,7 @@
           \"documentation\":\"<p>The ID of the new route table to associate with the subnet.</p>\",\
           \"locationName\":\"routeTableId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for ReplaceRouteTableAssociation.</p>\"\
+      }\
     },\
     \"ReplaceRouteTableAssociationResult\":{\
       \"type\":\"structure\",\
@@ -19076,8 +19872,7 @@
           \"documentation\":\"<p>The ID of the new association.</p>\",\
           \"locationName\":\"newAssociationId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of ReplaceRouteTableAssociation.</p>\"\
+      }\
     },\
     \"ReportInstanceReasonCodes\":{\
       \"type\":\"string\",\
@@ -19247,11 +20042,15 @@
         },\
         \"CreditSpecification\":{\
           \"shape\":\"CreditSpecificationRequest\",\
-          \"documentation\":\"<p>The credit option for CPU usage of the instance. Valid for T2 instances only.</p>\"\
+          \"documentation\":\"<p>The credit option for CPU usage of the instance. Valid for T2 or T3 instances only.</p>\"\
         },\
         \"CpuOptions\":{\
           \"shape\":\"LaunchTemplateCpuOptionsRequest\",\
           \"documentation\":\"<p>The CPU options for the instance. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html\\\">Optimizing CPU Options</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+        },\
+        \"CapacityReservationSpecification\":{\
+          \"shape\":\"LaunchTemplateCapacityReservationSpecificationRequest\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\"\
         }\
       },\
       \"documentation\":\"<p>The information to include in the launch template.</p>\"\
@@ -20122,6 +20921,7 @@
       \"type\":\"string\",\
       \"enum\":[\
         \"customer-gateway\",\
+        \"dedicated-host\",\
         \"dhcp-options\",\
         \"image\",\
         \"instance\",\
@@ -20277,6 +21077,11 @@
           \"shape\":\"LaunchTemplateCpuOptions\",\
           \"documentation\":\"<p>The CPU options for the instance. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html\\\">Optimizing CPU Options</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\",\
           \"locationName\":\"cpuOptions\"\
+        },\
+        \"CapacityReservationSpecification\":{\
+          \"shape\":\"LaunchTemplateCapacityReservationSpecificationResponse\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\",\
+          \"locationName\":\"capacityReservationSpecification\"\
         }\
       },\
       \"documentation\":\"<p>The information for a launch template. </p>\"\
@@ -20299,8 +21104,7 @@
           \"documentation\":\"<p>The Elastic IP address.</p>\",\
           \"locationName\":\"publicIp\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for RestoreAddressToClassic.</p>\"\
+      }\
     },\
     \"RestoreAddressToClassicResult\":{\
       \"type\":\"structure\",\
@@ -20315,8 +21119,7 @@
           \"documentation\":\"<p>The move status for the IP address.</p>\",\
           \"locationName\":\"status\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of RestoreAddressToClassic.</p>\"\
+      }\
     },\
     \"RevokeSecurityGroupEgressRequest\":{\
       \"type\":\"structure\",\
@@ -20367,8 +21170,7 @@
           \"documentation\":\"<p>Not supported. Use a set of IP permissions to specify a destination security group.</p>\",\
           \"locationName\":\"sourceSecurityGroupOwnerId\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for RevokeSecurityGroupEgress.</p>\"\
+      }\
     },\
     \"RevokeSecurityGroupIngressRequest\":{\
       \"type\":\"structure\",\
@@ -20414,8 +21216,7 @@
           \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\",\
           \"locationName\":\"dryRun\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for RevokeSecurityGroupIngress.</p>\"\
+      }\
     },\
     \"Route\":{\
       \"type\":\"structure\",\
@@ -20739,11 +21540,15 @@
         },\
         \"CreditSpecification\":{\
           \"shape\":\"CreditSpecificationRequest\",\
-          \"documentation\":\"<p>The credit option for CPU usage of the instance. Valid values are <code>standard</code> and <code>unlimited</code>. To change this attribute after launch, use <a>ModifyInstanceCreditSpecification</a>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/t2-instances.html\\\">T2 Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Default: <code>standard</code> </p>\"\
+          \"documentation\":\"<p>The credit option for CPU usage of the instance. Valid values are <code>standard</code> and <code>unlimited</code>. To change this attribute after launch, use <a>ModifyInstanceCreditSpecification</a>. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\\\">Burstable Performance Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>Default: <code>standard</code> (T2 instances) or <code>unlimited</code> (T3 instances)</p>\"\
         },\
         \"CpuOptions\":{\
           \"shape\":\"CpuOptionsRequest\",\
           \"documentation\":\"<p>The CPU options for the instance. For more information, see <a href=\\\"http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html\\\">Optimizing CPU Options</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>\"\
+        },\
+        \"CapacityReservationSpecification\":{\
+          \"shape\":\"CapacityReservationSpecification\",\
+          \"documentation\":\"<p>Information about the Capacity Reservation targeting option.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Contains the parameters for RunInstances.</p>\"\
@@ -21394,10 +22199,6 @@
     },\
     \"SecurityGroupReference\":{\
       \"type\":\"structure\",\
-      \"required\":[\
-        \"GroupId\",\
-        \"ReferencingVpcId\"\
-      ],\
       \"members\":{\
         \"GroupId\":{\
           \"shape\":\"String\",\
@@ -21819,10 +22620,20 @@
           \"documentation\":\"<p>The size of the disk in the snapshot, in GiB.</p>\",\
           \"locationName\":\"diskImageSize\"\
         },\
+        \"Encrypted\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Indicates whether the snapshot is encrypted.</p>\",\
+          \"locationName\":\"encrypted\"\
+        },\
         \"Format\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The format of the disk image from which the snapshot is created.</p>\",\
           \"locationName\":\"format\"\
+        },\
+        \"KmsKeyId\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The identifier for the AWS Key Management Service (AWS KMS) customer master key (CMK) that was used to create the encrypted snapshot.</p>\",\
+          \"locationName\":\"kmsKeyId\"\
         },\
         \"Progress\":{\
           \"shape\":\"String\",\
@@ -22068,7 +22879,7 @@
         },\
         \"FulfilledCapacity\":{\
           \"shape\":\"Double\",\
-          \"documentation\":\"<p>The number of units fulfilled by this request compared to the set target capacity.</p>\",\
+          \"documentation\":\"<p>The number of units fulfilled by this request compared to the set target capacity. You cannot set this value.</p>\",\
           \"locationName\":\"fulfilledCapacity\"\
         },\
         \"OnDemandFulfilledCapacity\":{\
@@ -22525,7 +23336,6 @@
     },\
     \"StaleSecurityGroup\":{\
       \"type\":\"structure\",\
-      \"required\":[\"GroupId\"],\
       \"members\":{\
         \"Description\":{\
           \"shape\":\"String\",\
@@ -22854,7 +23664,7 @@
           \"locationName\":\"instanceId\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the T2 instance whose credit option for CPU usage was successfully modified.</p>\"\
+      \"documentation\":\"<p>Describes the T2 or T3 instance whose credit option for CPU usage was successfully modified.</p>\"\
     },\
     \"SuccessfulInstanceCreditSpecificationSet\":{\
       \"type\":\"list\",\
@@ -22878,7 +23688,7 @@
       \"members\":{\
         \"Key\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The key of the tag.</p> <p>Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with <code>aws:</code> </p>\",\
+          \"documentation\":\"<p>The key of the tag.</p> <p>Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with <code>aws:</code>.</p>\",\
           \"locationName\":\"key\"\
         },\
         \"Value\":{\
@@ -22899,7 +23709,7 @@
         },\
         \"ResourceId\":{\
           \"shape\":\"String\",\
-          \"documentation\":\"<p>The ID of the resource. For example, <code>ami-1a2b3c4d</code>.</p>\",\
+          \"documentation\":\"<p>The ID of the resource.</p>\",\
           \"locationName\":\"resourceId\"\
         },\
         \"ResourceType\":{\
@@ -22934,7 +23744,7 @@
       \"members\":{\
         \"ResourceType\":{\
           \"shape\":\"ResourceType\",\
-          \"documentation\":\"<p>The type of resource to tag. Currently, the resource types that support tagging on creation are <code>fleet</code>, <code>instance</code>, <code>snapshot</code>, and <code>volume</code>. To tag a resource after it has been created, see <a>CreateTags</a>.</p>\",\
+          \"documentation\":\"<p>The type of resource to tag. Currently, the resource types that support tagging on creation are <code>fleet</code>, <code>dedicated-host</code>, <code>instance</code>, <code>snapshot</code>, and <code>volume</code>. To tag a resource after it has been created, see <a>CreateTags</a>.</p>\",\
           \"locationName\":\"resourceType\"\
         },\
         \"Tags\":{\
@@ -23254,11 +24064,11 @@
         },\
         \"Error\":{\
           \"shape\":\"UnsuccessfulInstanceCreditSpecificationItemError\",\
-          \"documentation\":\"<p>The applicable error for the T2 instance whose credit option for CPU usage was not modified.</p>\",\
+          \"documentation\":\"<p>The applicable error for the T2 or T3 instance whose credit option for CPU usage was not modified.</p>\",\
           \"locationName\":\"error\"\
         }\
       },\
-      \"documentation\":\"<p>Describes the T2 instance whose credit option for CPU usage was not modified.</p>\"\
+      \"documentation\":\"<p>Describes the T2 or T3 instance whose credit option for CPU usage was not modified.</p>\"\
     },\
     \"UnsuccessfulInstanceCreditSpecificationItemError\":{\
       \"type\":\"structure\",\
@@ -23274,7 +24084,7 @@
           \"locationName\":\"message\"\
         }\
       },\
-      \"documentation\":\"<p>Information about the error for the T2 instance whose credit option for CPU usage was not modified.</p>\"\
+      \"documentation\":\"<p>Information about the error for the T2 or T3 instance whose credit option for CPU usage was not modified.</p>\"\
     },\
     \"UnsuccessfulInstanceCreditSpecificationSet\":{\
       \"type\":\"list\",\
@@ -23354,8 +24164,7 @@
           \"shape\":\"IpPermissionList\",\
           \"documentation\":\"<p>The IP permissions for the security group rule.</p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for UpdateSecurityGroupRuleDescriptionsEgress.</p>\"\
+      }\
     },\
     \"UpdateSecurityGroupRuleDescriptionsEgressResult\":{\
       \"type\":\"structure\",\
@@ -23365,8 +24174,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of UpdateSecurityGroupRuleDescriptionsEgress.</p>\"\
+      }\
     },\
     \"UpdateSecurityGroupRuleDescriptionsIngressRequest\":{\
       \"type\":\"structure\",\
@@ -23388,8 +24196,7 @@
           \"shape\":\"IpPermissionList\",\
           \"documentation\":\"<p>The IP permissions for the security group rule. </p>\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the parameters for UpdateSecurityGroupRuleDescriptionsIngress.</p>\"\
+      }\
     },\
     \"UpdateSecurityGroupRuleDescriptionsIngressResult\":{\
       \"type\":\"structure\",\
@@ -23399,8 +24206,7 @@
           \"documentation\":\"<p>Returns <code>true</code> if the request succeeds; otherwise, returns an error.</p>\",\
           \"locationName\":\"return\"\
         }\
-      },\
-      \"documentation\":\"<p>Contains the output of UpdateSecurityGroupRuleDescriptionsIngress.</p>\"\
+      }\
     },\
     \"UserBucket\":{\
       \"type\":\"structure\",\
@@ -24685,6 +25491,30 @@
         }\
       },\
       \"documentation\":\"<p>The tunnel options for a VPN connection.</p>\"\
+    },\
+    \"WithdrawByoipCidrRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"Cidr\"],\
+      \"members\":{\
+        \"Cidr\":{\
+          \"shape\":\"String\",\
+          \"documentation\":\"<p>The public IPv4 address range, in CIDR notation.</p>\"\
+        },\
+        \"DryRun\":{\
+          \"shape\":\"Boolean\",\
+          \"documentation\":\"<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"WithdrawByoipCidrResult\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ByoipCidr\":{\
+          \"shape\":\"ByoipCidr\",\
+          \"documentation\":\"<p>Information about the address pool.</p>\",\
+          \"locationName\":\"byoipCidr\"\
+        }\
+      }\
     },\
     \"ZoneNameStringList\":{\
       \"type\":\"list\",\

@@ -63,6 +63,7 @@ typedef NS_ENUM(NSInteger, AWSPollyLanguageCode) {
     AWSPollyLanguageCodeEnIN,
     AWSPollyLanguageCodeEnUS,
     AWSPollyLanguageCodeEsES,
+    AWSPollyLanguageCodeEsMX,
     AWSPollyLanguageCodeEsUS,
     AWSPollyLanguageCodeFrCA,
     AWSPollyLanguageCodeFrFR,
@@ -168,6 +169,9 @@ typedef NS_ENUM(NSInteger, AWSPollyVoiceId) {
     AWSPollyVoiceIdSeoyeon,
     AWSPollyVoiceIdAditi,
     AWSPollyVoiceIdZhiyu,
+    AWSPollyVoiceIdBianca,
+    AWSPollyVoiceIdLucia,
+    AWSPollyVoiceIdMia,
 };
 
 @class AWSPollyDeleteLexiconInput;
@@ -656,7 +660,7 @@ typedef NS_ENUM(NSInteger, AWSPollyVoiceId) {
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable lexiconNames;
 
 /**
- <p> The format in which the returned output will be encoded. For audio stream, this will be mp3, ogg_vorbis, or pcm. For speech marks, this will be json. </p>
+ <p> The format in which the returned output will be encoded. For audio stream, this will be mp3, ogg_vorbis, or pcm. For speech marks, this will be json. </p><p>When pcm is used, the content returned is audio/pcm in a signed 16-bit, 1 channel (mono), little-endian format. </p>
  */
 @property (nonatomic, assign) AWSPollyOutputFormat outputFormat;
 

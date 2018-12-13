@@ -13,8 +13,8 @@
 // permissions and limitations under the License.
 //
 
-#import <AWSS3/AWSS3.h>
+#import "AWSFirehoseSerializer.h"
 
-@interface AWSS3TransferUtility (Validation)
+@implementation AWSFirehoseRequestSerializer
 
 @end
